@@ -1,8 +1,10 @@
 import React from 'react'
 import Link from "next/link"
+
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { DropdownMenuTrigger, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuItem, DropdownMenuContent, DropdownMenu } from "@/components/ui/dropdown-menu"
+import Image from 'next/image'
 function Header() {
   return (
     <>
@@ -71,7 +73,7 @@ function Header() {
                 size="icon"
                 variant="ghost"
               >
-                <img
+                <Image
                   alt="Avatar"
                   className="rounded-full"
                   height="32"

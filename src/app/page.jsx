@@ -20,7 +20,7 @@ export default function Home() {
               Peace of mind on the open road
             </h1>
             <p className="max-w-[600px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
-              Protect your vehicle with the best insurance coverage. We make sure you're covered when the unexpected
+              Protect your vehicle with the best insurance coverage. We make sure you,re covered when the unexpected
               happens.
             </p>
           </div>
@@ -41,7 +41,7 @@ export default function Home() {
           Why choose our insurance agency?
         </h2>
         <p className="mx-auto max-w-[600px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
-          We're dedicated to providing the best service and coverage options for our customers.
+          We,re dedicated to providing the best service and coverage options for our customers.
         </p>
       </div>
       <div className="mx-auto max-w-4xl grid gap-6 lg:grid-cols-3 lg:gap-0">
@@ -50,7 +50,7 @@ export default function Home() {
           <div className="space-y-2">
             <h3 className="font-bold">Custom Coverage</h3>
             <p className="text-sm text-gray-500 dark:text-gray-400">
-              We'll help you find the perfect coverage for your needs.
+              We,ll help you find the perfect coverage for your needs.
             </p>
           </div>
         </div>
@@ -59,7 +59,7 @@ export default function Home() {
           <div className="space-y-2">
             <h3 className="font-bold">Peace of Mind</h3>
             <p className="text-sm text-gray-500 dark:text-gray-400">
-              Rest easy knowing you're protected on the road.
+              Rest easy knowing you,re protected on the road.
             </p>
           </div>
         </div>
