@@ -17,6 +17,7 @@ function Header() {
         </div>
         <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
           <li><Link href={'./clients'} >Clients</Link></li>
+          <li><Link href={'./vehicles'} >Vehicles</Link></li>
           <li><Link href={'./policies'} >Policies</Link></li>
          
         
@@ -49,6 +50,9 @@ function Header() {
         </Link>
         <Link className="text-gray-500 dark:text-gray-400" href="./clients">
           Clients
+        </Link>
+        <Link className="text-gray-500 dark:text-gray-400" href="./vehicles">
+      Vehicles
         </Link>
         <Link className="text-gray-500 dark:text-gray-400" href="./policies">
           Policies

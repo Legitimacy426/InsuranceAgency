@@ -3,12 +3,6 @@ import { TableHead, TableRow, TableHeader, TableCell, TableBody, Table } from "@
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { DropdownMenuTrigger, DropdownMenuRadioItem, DropdownMenuRadioGroup, DropdownMenuContent, DropdownMenu } from "@/components/ui/dropdown-menu"
-import { SelectValue, SelectTrigger, SelectItem, SelectContent, Select } from "@/components/ui/select"
-import { Textarea } from "@/components/ui/textarea"
-import { Checkbox } from "@/components/ui/checkbox"
-
-
-
 
 import Header from '../components/Header'
 import { fetchAll } from '../../../../libs/functions/fetchAll'
@@ -22,11 +16,11 @@ export default async function page() {
   return (
     <>  
       <Header />
-      <div key="1" className="flex flex-col w-full ">
+      <div key="1" className="flex flex-col w-full border">
       <div className="flex items-center py-4  px-4 border-b">
         <h2 className="text-sm font-semibold">List of Clients</h2>
         <div className="ml-auto flex gap-1.5">
-        <label htmlFor="my_modal_6" className="btn btn-sm text-sm border btn-outline rounded-sm">New Policy</label>
+        <label htmlFor="my_modal_6" className="btn btn-sm text-sm border btn-outline rounded-sm">New Vehicle</label>
         </div>
       </div>
       <div className="flex items-center justify-between px-4 py-2">
@@ -82,7 +76,7 @@ export default async function page() {
 </div>
     </div>
 
-    
+     
     {/* modals======================================
      */}
 
