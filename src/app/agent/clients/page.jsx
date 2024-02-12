@@ -1,6 +1,6 @@
 "use client"
 
-import React from 'react'
+import React, { useState } from 'react'
 import { TableHead, TableRow, TableHeader, TableCell, TableBody, Table } from "@/components/ui/table"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -12,13 +12,43 @@ import { Checkbox } from "@/components/ui/checkbox"
 
 
 import Header from '../components/Header'
-import { fetchAll } from '../../../../libs/functions/fetchAll'
+
+import { insertData } from '../../../../libs/functions/insertData'
+import useFetchAll from '../../../../hooks/useFetchAll'
 
 
 
-export default async function page() {
+export default  function Page() {
+const {data,error,loading} = useFetchAll("clients")
 
-  const data = await fetchAll('clients')
+  const [fullName, setFullName] = useState("");
+  const [IDNumber, setIDNumber] = useState("");
+  const [email, setEmail] = useState("");
+  const [address, setAddress] = useState("");
+  const [phone, setPhone] = useState("");
+  const [city, setCity] = useState("");
+
+const handleSubmit = async (e) =>{
+e.preventDefault()
+const doc = {
+  fullName,
+  IDNumber,
+  email,
+  address,
+  phone,
+  city
+  
+}
+
+
+insertData("clients",doc)
+
+}
+
+
+
+console.log(data)
+ 
 
   return (
     <>  
@@ -57,17 +87,29 @@ export default async function page() {
 <Table>
         <TableHeader>
           <TableRow>
-            <TableHead className="text-sm">Item</TableHead>
-            <TableHead className="text-sm">Status</TableHead>
-            <TableHead className="text-sm">Inventory</TableHead>
+            <TableHead className="text-sm">Full name</TableHead>
+            <TableHead className="text-sm">Email</TableHead>
+            <TableHead className="text-sm">Phone</TableHead>
+            <TableHead className="text-sm">ID Number</TableHead>
+            <TableHead className="text-sm">Address</TableHead>
             <TableHead className="text-sm">Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          <TableRow>
-            <TableCell className="font-medium">Headset</TableCell>
-            <TableCell>In Stock</TableCell>
-            <TableCell>300</TableCell>
+
+       {loading && ( <p className="flex  items-center justify-center text-center">
+       <span className="loading loading-bars loading-md "></span>
+       
+        </p>)}
+      
+        {data?.map(item =>(
+             
+            <TableRow key={item.id}>
+            <TableCell className="font-medium">{item.fullName}</TableCell>
+            <TableCell>{item.email}</TableCell>
+            <TableCell>{item.phone}</TableCell>
+            <TableCell>{item.IDNumber}</TableCell>
+            <TableCell>{item.address}</TableCell>
             <TableCell className="space-y-3">
               <Button className="w-6 h-6" size="icon" variant="outline">
                 <FileEditIcon className="h-4 w-4" />
@@ -79,6 +121,7 @@ export default async function page() {
               </Button>
             </TableCell>
           </TableRow>
+        ))}
         </TableBody>
       </Table>
 </div>
@@ -97,43 +140,43 @@ export default async function page() {
       <h2 className="text-xl font-semibold mb-4">
         Add New Cleint
       </h2>
-      <form className="grid grid-cols-2 gap-4">
+      <form onSubmit={(e)=>{handleSubmit(e)}}  className="grid grid-cols-2 gap-4">
         <div className="flex flex-col">
           <label className="font-medium" htmlFor="name">
             Full name
           </label>
-          <Input id="name" placeholder="John Doe" />
+          <Input id="name" name="fullName" value={fullName} onChange={(e)=>{setFullName(e.target.value)}} placeholder="John Doe" />
         </div>
         <div className="flex flex-col">
           <label className="font-medium" htmlFor="idnumber">
           ID Number
           </label>
-          <Input id="idnumber" placeholder="clients national ID number" type="number" />
+          <Input id="idnumber" name="IDNumber" value={IDNumber}  onChange={(e)=>{setIDNumber(e.target.value)}}   placeholder="clients national ID number" type="number" />
         </div>
-        <div className="flex flex-col">
+        <div className="flex flex-col">  
           <label className="font-medium" htmlFor="email">
          Email Address
           </label>
-          <Input id="email" placeholder="example@gmail.com" type="email" />
+          <Input id="email" name="email" placeholder="example@gmail.com"  value={email} onChange={(e)=>{setEmail(e.target.value)}} type="email" />
         </div>
         <div className="flex flex-col">
           <label className="font-medium" htmlFor="phone">
            Phone Number
           </label>
-          <Input id="phone" placeholder="phone number" type="text" />
+          <Input id="phone" name="phone" placeholder="phone number" value={phone} onChange={(e)=>{setPhone(e.target.value)}} type="text" />
         </div>
         
         <div className="flex flex-col col-span-2">
           <label className="font-medium" htmlFor="city">
             City
           </label>
-          <Input id="city" placeholder="City" />
+          <Input id="city" name="city"  value={city} onChange={(e)=>{setCity(e.target.value)}} placeholder="City" />
         </div>
         <div className="flex flex-col col-span-2">
           <label className="font-medium" htmlFor="address">
             Street Address
           </label>
-          <Input id="address" placeholder="Street Address" />
+          <Input id="address" name="address" value={address} onChange={(e)=>{setAddress(e.target.value)}} placeholder="Street Address" />
         </div>
         
         {/* <div className="flex items-center col-span-2">
@@ -143,7 +186,7 @@ export default async function page() {
           </label>
         </div> */}
         <div className="col-span-2">
-          <Button className="w-full">Submit</Button>
+          <Button id="submit" className="w-full" type="submit" name="submit">Submit</Button>
         </div>
       </form>
     </div>

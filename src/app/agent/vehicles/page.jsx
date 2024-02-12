@@ -1,4 +1,6 @@
-import React from 'react'
+"use client"
+
+import React,{useState} from 'react'
 import { TableHead, TableRow, TableHeader, TableCell, TableBody, Table } from "@/components/ui/table"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -6,12 +8,45 @@ import { DropdownMenuTrigger, DropdownMenuRadioItem, DropdownMenuRadioGroup, Dro
 
 import Header from '../components/Header'
 import { fetchAll } from '../../../../libs/functions/fetchAll'
+import { insertData } from '../../../../libs/functions/insertData'
+import useFetchAll from '../../../../hooks/useFetchAll'
 
 
 
-export default async function page() {
+export default  function Page() {
+  const {data,error,loading} = useFetchAll("vehicles")
+  const [model, setModel] = useState("");
+  const [make, setMake] = useState("");
+  const [year, setYear] = useState(2022);
+  const [VIN, setVIN] = useState("");
+  const [usage, setUsage] = useState("Personal");
+  const [mileage, setMileage] = useState('');
+  const [user_id, setUser_id] = useState("65c343ac353ff01d77ec44a2");
+  const [antiTheftDevice, setAntiTheftDevice] = useState(true);
+  const [policy_id, setPolicy_id] = useState("5");
 
-  const data = await fetchAll('clients')
+
+  const handleSubmit = (e) =>{
+
+    e.preventDefault()
+    const doc = {
+      model,
+      make,
+      year,
+      VIN,
+      usage,
+      mileage,
+      user_id,
+      antiTheftDevice,
+      policy_id
+    };
+    
+    console.log(doc)
+
+    insertData("vehicles",doc)
+  }
+
+  // const data = await fetchAll('clients')
 
   return (
     <>  
@@ -49,29 +84,40 @@ export default async function page() {
 <Table>
         <TableHeader>
           <TableRow>
-            <TableHead className="text-sm">Item</TableHead>
-            <TableHead className="text-sm">Status</TableHead>
-            <TableHead className="text-sm">Inventory</TableHead>
+            <TableHead className="text-sm">Make</TableHead>
+            <TableHead className="text-sm">Model</TableHead>
+            <TableHead className="text-sm">Year</TableHead>
+            <TableHead className="text-sm">VIN</TableHead>
             <TableHead className="text-sm">Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          <TableRow>
-            <TableCell className="font-medium">Headset</TableCell>
-            <TableCell>In Stock</TableCell>
-            <TableCell>300</TableCell>
-            <TableCell className="space-y-3">
-              <Button className="w-6 h-6" size="icon" variant="outline">
-                <FileEditIcon className="h-4 w-4" />
-                <span className="sr-only">Edit</span>
-              </Button>
-              <Button className="w-6 h-6" size="icon" variant="outline">
-                <TrashIcon className="h-4 w-4" />
-                <span className="sr-only">Delete</span>
-              </Button>
-            </TableCell>
-          </TableRow>
-        </TableBody>
+
+{loading && ( <p className="flex  items-center justify-center text-center">
+<span className="loading loading-bars loading-md "></span>
+
+ </p>)}
+
+ {data?.map(item =>(
+      
+     <TableRow key={item.id}>
+     <TableCell className="font-medium">{item.make}</TableCell>
+     <TableCell>{item.model}</TableCell>
+     <TableCell>{item.year}</TableCell>
+     <TableCell>{item.VIN}</TableCell>
+     <TableCell className="space-y-3">
+       <Button className="w-6 h-6" size="icon" variant="outline">
+         <FileEditIcon className="h-4 w-4" />
+         <span className="sr-only">Edit</span>
+       </Button>
+       <Button className="w-6 h-6" size="icon" variant="outline">
+         <TrashIcon className="h-4 w-4" />
+         <span className="sr-only">Delete</span>
+       </Button>
+     </TableCell>
+   </TableRow>
+ ))}
+ </TableBody>
       </Table>
 </div>
     </div>
@@ -86,45 +132,45 @@ export default async function page() {
   <div className="modal-box rounded-none">
   <div className="">
       <h2 className="text-xl font-semibold mb-4">
-        Add New Cleint
+       Add Vehicle 
       </h2>
-      <form className="grid grid-cols-2 gap-4">
+      <form className="grid grid-cols-2 gap-4" onSubmit={(e)=>{handleSubmit(e)}}>
         <div className="flex flex-col">
           <label className="font-medium" htmlFor="name">
-            Full name
+           Model
           </label>
-          <Input id="name" placeholder="John Doe" />
+          <Input id="name" placeholder="model" value={model} onChange={(e)=>{setModel(e.target.value)}} />
         </div>
         <div className="flex flex-col">
           <label className="font-medium" htmlFor="idnumber">
-          ID Number
+      Make 
           </label>
-          <Input id="idnumber" placeholder="clients national ID number" type="number" />
+          <Input id="idnumber" placeholder="make" type="text" value={make} onChange={(e)=>{setMake(e.target.value)}} />
         </div>
         <div className="flex flex-col">
           <label className="font-medium" htmlFor="email">
-         Email Address
+      Year
           </label>
-          <Input id="email" placeholder="example@gmail.com" type="email" />
+          <Input id="email" placeholder="Year" type="number" value={year}  onChange={(e)=>{setYear(e.target.value)}} />
         </div>
         <div className="flex flex-col">
           <label className="font-medium" htmlFor="phone">
-           Phone Number
+       VIN
           </label>
-          <Input id="phone" placeholder="phone number" type="text" />
+          <Input id="phone" placeholder="VIN" type="text"  value={VIN} onChange={(e)=>{setVIN(e.target.value)}} />
         </div>
         
         <div className="flex flex-col col-span-2">
           <label className="font-medium" htmlFor="city">
-            City
+         Usage
           </label>
-          <Input id="city" placeholder="City" />
+          <Input id="city" placeholder="Usage " value={usage} onChange={(e)=>{setUsage(e.target.value)}}  />
         </div>
         <div className="flex flex-col col-span-2">
           <label className="font-medium" htmlFor="address">
-            Street Address
+         Milage
           </label>
-          <Input id="address" placeholder="Street Address" />
+          <Input id="address" placeholder="Mileage" value={mileage} onChange={(e)=>{setMileage(e.target.value)}} />
         </div>
         
         {/* <div className="flex items-center col-span-2">

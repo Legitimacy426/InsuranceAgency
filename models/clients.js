@@ -4,10 +4,12 @@ import mongoose from "mongoose";
  
 
  const clientSchema = new Schema({
-    full_name:String,
-    password:String,
+    fullName:String,
+    IDNumber:String,
     email:String,
-    location:String,
+    address:String,
+    phone:String,
+    city:String,
     createdDate: {
       type: Date,
       default: Date.now

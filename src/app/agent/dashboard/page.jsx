@@ -8,7 +8,7 @@ import Header from '../components/Header'
 import Footer from '@/app/components/Footer'
 
 
-function page() {
+function Page() {
   return (
   <>
  <Header />
@@ -88,7 +88,7 @@ function page() {
   )
 }
 
-export default page
+export default Page
 
 
 

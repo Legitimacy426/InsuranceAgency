@@ -20,7 +20,7 @@ import useFetchAll from '../../../../hooks/useFetchAll'
 
 
 export default  function Page() {
-  const {data,error,loading} = useFetchAll("policies")
+  const {data,error,loading} = useFetchAll("quotes")
   // const data = await fetchAll('policies')
   const [policyNumber, setPolicyNumber] = useState("");
   const [policyType, setPolicyType] = useState("");
@@ -55,9 +55,9 @@ console.log(doc)
       <Header />
       <div key="1" className="flex flex-col w-full ">
       <div className="flex items-center py-4  px-4 border-b">
-        <h2 className="text-sm font-semibold">List of Clients</h2>
+        <h2 className="text-sm font-semibold">List of Quotes</h2>
         <div className="ml-auto flex gap-1.5">
-        <label htmlFor="my_modal_6" className="btn btn-sm text-sm border btn-outline rounded-sm">New Policy</label>
+        <label htmlFor="my_modal_6" className="btn btn-sm text-sm border btn-outline rounded-sm">New Quote</label>
         </div>
       </div>
       <div className="flex items-center justify-between px-4 py-2">
@@ -100,7 +100,7 @@ console.log(doc)
 
  {data?.map(item =>(
       
-     <TableRow key={item.id} >
+     <TableRow key={item.id}>
      <TableCell className="font-medium">{item.policyNumber}</TableCell>
      <TableCell>{item.policyType}</TableCell>
      <TableCell>{item.premium}</TableCell>
@@ -131,7 +131,7 @@ console.log(doc)
   <div className="modal-box rounded-none">
   <div className="">
       <h2 className="text-xl font-semibold mb-4">
-      Add policy
+      Add Quote
       </h2>
       <form onSubmit={(e)=>{handleSubmit(e)}} className="grid grid-cols-2 gap-4">
         <div className="flex flex-col">

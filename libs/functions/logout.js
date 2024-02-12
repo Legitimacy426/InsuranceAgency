@@ -8,9 +8,10 @@ export const SignOut = () =>{
     const router = useRouter()
     signOut(auth).then(() => {
         // Sign-out successful.
-router.push('./')
+        localStorage.removeItem("userId")
+        router.push('./')
     
       }).catch((error) => {
-        // An error happened.
+       console.log(error)
       });
 }

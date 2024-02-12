@@ -5,7 +5,9 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { DropdownMenuTrigger, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuItem, DropdownMenuContent, DropdownMenu } from "@/components/ui/dropdown-menu"
 import Image from 'next/image'
+import { authenticate } from '../../../../libs/functions/auth'
 function Header() {
+  // const userId = authenticate()
   return (
     <>
    
@@ -19,6 +21,7 @@ function Header() {
           <li><Link href={'./clients'} >Clients</Link></li>
           <li><Link href={'./vehicles'} >Vehicles</Link></li>
           <li><Link href={'./policies'} >Policies</Link></li>
+          <li><Link href={'./quotes'} >Quotes</Link></li>
          
         
         </ul>
@@ -57,6 +60,9 @@ function Header() {
         <Link className="text-gray-500 dark:text-gray-400" href="./policies">
           Policies
         </Link>
+        <Link className="text-gray-500 dark:text-gray-400" href="./quotes">
+    Quotes
+        </Link>
       
       </nav>
       <div className="flex items-center w-full gap-4 md:ml-auto md:gap-2 lg:gap-4">
@@ -77,16 +83,16 @@ function Header() {
                 size="icon"
                 variant="ghost"
               >
-                <Image
-                  alt="Avatar"
-                  className="rounded-full"
-                  height="32"
-                  src="/placeholder.svg"
-                  style={{
-                    aspectRatio: "32/32",
-                    objectFit: "cover",
-                  }}
-                  width="32"
+               <UsersIcon
+            
+               className="rounded-full"
+               height="32"
+             
+               style={{
+                 aspectRatio: "32/32",
+                 objectFit: "cover",
+               }}
+               width="32"
                 />
                 <span className="sr-only">Toggle user menu</span>
               </Button>

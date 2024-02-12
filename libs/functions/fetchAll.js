@@ -1,6 +1,6 @@
 
 export const fetchAll = async(tag)=>{
-    const url = `https://insurance-agency-bice.vercel.app/api//${tag}`
+    const url = `https://insurance-agency-bice.vercel.app/api/${tag}`
   try {
     const res = await fetch(url,{cache:"no-store"})
     if(!res.ok){

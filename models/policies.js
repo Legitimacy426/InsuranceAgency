@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const policySchema = new mongoose.Schema({
     policyNumber: {
       type: String,
-      required: true,
+   
       unique: true
     },
     policyType: {
@@ -16,15 +16,15 @@ const policySchema = new mongoose.Schema({
     },
     coverageLimit: {
       type: Number,
-      required: true
+   
     },
     deductible: {
       type: Number,
-      required: true
+   
     },
     premium: {
       type: Number,
-      required: true
+   
     },
     additionalCoverages: {
       type: [String],
