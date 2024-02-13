@@ -15,6 +15,7 @@ import Header from '../components/Header'
 
 import { insertData } from '../../../../libs/functions/insertData'
 import useFetchAll from '../../../../hooks/useFetchAll'
+import Link from 'next/link'
 
 
 
@@ -104,8 +105,9 @@ console.log(data)
       
         {data?.map(item =>(
              
-            <TableRow key={item.id}>
-            <TableCell className="font-medium">{item.fullName}</TableCell>
+           <TableRow key={item.id}>
+            
+            <TableCell className="font-medium"><Link href={`./clients/${item._id}`} >{item.fullName}</Link></TableCell>
             <TableCell>{item.email}</TableCell>
             <TableCell>{item.phone}</TableCell>
             <TableCell>{item.IDNumber}</TableCell>

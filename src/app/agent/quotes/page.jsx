@@ -16,10 +16,25 @@ import { fetchAll } from '../../../../libs/functions/fetchAll'
 import Search from '@/app/components/Search'
 import { insertData } from '../../../../libs/functions/insertData'
 import useFetchAll from '../../../../hooks/useFetchAll'
-
+import { Label } from '@/components/ui/label'
+import SearchableSelect from '../components/SearchableSelect'
 
 
 export default  function Page() {
+
+  const [selectedOption, setSelectedOption] = useState(null);
+
+  const options = [
+    { value: 'apple', label: 'Apple' },
+    { value: 'banana', label: 'Banana' },
+    { value: 'orange', label: 'Orange' },
+    { value: 'grape', label: 'Grape' },
+    // Add more options as needed
+  ];
+
+  const handleChange = (selectedOption) => {
+    setSelectedOption(selectedOption);
+  };
   const {data,error,loading} = useFetchAll("quotes")
   // const data = await fetchAll('policies')
   const [policyNumber, setPolicyNumber] = useState("");
@@ -134,53 +149,34 @@ console.log(doc)
       Add Quote
       </h2>
       <form onSubmit={(e)=>{handleSubmit(e)}} className="grid grid-cols-2 gap-4">
-        <div className="flex flex-col">
-          <label className="font-medium" htmlFor="name">
-          Policy Number 
-          </label>
-          <Input id="name" value={policyNumber} onChange={(e)=>{setPolicyNumber(e.target.value)}} placeholder="John Doe" />
-        </div>
-        <div className="flex flex-col">
-          <label className="font-medium" htmlFor="idnumber">
-        Policy Type
-          </label>
-          <Input id="idnumber" placeholder="type" type="number" onChange={(e)=>{setPolicyType(e.target.value)}}  value={policyType} />
-        </div>
-        <div className="flex flex-col">
-          <label className="font-medium" htmlFor="email">
-        coverage Limit
-          </label>
-          <Input id="email" placeholder="limit"  type="number" value={coverageLimit} onChange={(e)=>{setCoverageLimit(e.target.value)}}  />
-        </div>
-        <div className="flex flex-col">
-          <label className="font-medium" htmlFor="phone">
-        deductible
-          </label>
-          <Input id="phone" placeholder="phone number" value={deductible} onChange={(e)=>{setDeductible(e.target.value)}}  type="text" />
-        </div>
-        
-        <div className="flex flex-col col-span-2">
-          <label className="font-medium" htmlFor="city">
-           description 
-          </label>
-          <Input id="city" placeholder="City"  value={description} onChange={(e)=>{setDescription(e.target.value)}} />
-        </div>
-        <div className="flex flex-col col-span-2">
-          <label className="font-medium" htmlFor="address">
-           Premium
-          </label>
-          <Input id="address" placeholder="Street Address" value={premium} onChange={(e)=>{setPremium(e.target.value)}}  />
-        </div>
-        
-        {/* <div className="flex items-center col-span-2">
-          <Checkbox id="terms" />
-          <label className="text-sm ml-2" htmlFor="terms">
-            By clicking Submit, you agree to our updated Privacy Policy terms and conditions.
-          </label>
-        </div> */}
-        <div className="col-span-2">
-          <Button className="w-full">Submit</Button>
-        </div>
+      <div>
+      <label>Vehicle:</label>
+      <SearchableSelect
+        options={options}
+        value={selectedOption}
+        onChange={handleChange}
+      />
+       
+      </div>
+      <div>
+      <label>Policy:</label>
+      <SearchableSelect
+        options={options}
+        value={selectedOption}
+        onChange={handleChange}
+      />
+       
+      </div>
+      <div>
+        <Label className="font-semibold">Start Date :</Label>
+        <Input defaultValue="Kes50,000" id="coverage-amount" />
+      </div>
+      <div>
+        <Label className="font-semibold">Comments:</Label>
+        <textarea placeholder="Some comments" className="textarea textarea-bordered textarea-sm w-full max-w-xs ronded-none" ></textarea>
+      </div>
+      <Button type="submit">Submit</Button>
+    
       </form>
     </div>
     <div className="modal-action">

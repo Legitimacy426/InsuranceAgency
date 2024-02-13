@@ -1,4 +1,6 @@
-import React from 'react'
+"use client"
+
+import React,{useState} from 'react'
 import Link from "next/link"
 
 import { Input } from "@/components/ui/input"
@@ -6,7 +8,26 @@ import { Button } from "@/components/ui/button"
 import { DropdownMenuTrigger, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuItem, DropdownMenuContent, DropdownMenu } from "@/components/ui/dropdown-menu"
 import Image from 'next/image'
 import { authenticate } from '../../../../libs/functions/auth'
+import useFetchAll from '../../../../hooks/useFetchAll'
+import SearchableSelect from './SearchableSelect'
 function Header() {
+  const [selectedOption, setSelectedOption] = useState(null);
+
+  // const options = [
+  //   { value: 'apple', label: 'Apple' },
+  //   { value: 'banana', label: 'Banana' },
+  //   { value: 'orange', label: 'Orange' },
+  //   { value: 'grape', label: 'Grape' },
+  //   // Add more options as needed
+  // ];
+
+const {data} = useFetchAll("clients")
+
+
+  const handleChange = (selectedOption) => {
+    setSelectedOption(selectedOption);
+    console.log(selectedOption)
+  };
   // const userId = authenticate()
   return (
     <>
@@ -69,11 +90,18 @@ function Header() {
         <form className="flex-1 ml-auto sm:flex-initial">
           <div className="relative">
             <SearchIcon className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500 dark:text-gray-400" />
-            <Input
+            {/* <Input
               className="pl-8 sm:w-[300px] md:w-[200px] lg:w-[300px]"
               placeholder="Search customers..."
               type="search"
-            />
+            /> */}
+         <SearchableSelect
+          options={data}
+           value={selectedOption}
+           onChange={handleChange}
+           placeholder={selectedOption}
+      />
+
           </div>
         </form>
         <DropdownMenu>

@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react'
 
-function useFetchAll(tag) {
+function useFetchWithID(tag,id) {
 
     const [error,setError] = useState('')
     const [data,setData] = useState([])
@@ -10,7 +10,7 @@ function useFetchAll(tag) {
 // https://insurance-agency-bice.vercel.app/api/
 //http://localhost:3000/api/
     const fetchData = async () =>{
-        const url = `http://localhost:3000/api/${tag}`
+        const url = `http://localhost:3000/api/${tag}/${id}`
         try {
           const res = await fetch(url,{cache:"no-store"})
           if(!res.ok){
@@ -31,7 +31,7 @@ function useFetchAll(tag) {
 useEffect(()=>{
  
  fetchData()
-},[tag])
+},[id])
 
 
   return (
@@ -39,4 +39,4 @@ useEffect(()=>{
   )
 }
 
-export default useFetchAll
+export default useFetchWithID
