@@ -4,15 +4,19 @@ import mongoose from "mongoose";
 const vehicleSchema = new mongoose.Schema({
     make: {
         type: String,
-        required: true
+     
+      },
+    label: {
+        type: String,
+     
       },
       model: {
         type: String,
-        required: true
+     
       },
       year: {
         type: Number,
-        required: true
+     
       },
       VIN: {
         type: String,

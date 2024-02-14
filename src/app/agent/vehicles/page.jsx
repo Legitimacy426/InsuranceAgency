@@ -10,6 +10,7 @@ import Header from '../components/Header'
 import { fetchAll } from '../../../../libs/functions/fetchAll'
 import { insertData } from '../../../../libs/functions/insertData'
 import useFetchAll from '../../../../hooks/useFetchAll'
+import SearchableSelect from '../components/SearchableSelect'
 
 
 
@@ -24,11 +25,22 @@ export default  function Page() {
   const [user_id, setUser_id] = useState("65c343ac353ff01d77ec44a2");
   const [antiTheftDevice, setAntiTheftDevice] = useState(true);
   const [policy_id, setPolicy_id] = useState("5");
+  const [label, setLabel] = useState(VIN);
+  const [selectedOption, setSelectedOption] = useState(null);
 
+
+  const handleChange = (selectedOption) => {
+    setSelectedOption(selectedOption._id);
+    console.log(selectedOption._id)
+    // navigate here
+   
+
+  };
 
   const handleSubmit = (e) =>{
 
     e.preventDefault()
+    setLabel(VIN)
     const doc = {
       model,
       make,
@@ -36,9 +48,10 @@ export default  function Page() {
       VIN,
       usage,
       mileage,
-      user_id,
+      client_id:selectedOption,
       antiTheftDevice,
-      policy_id
+      policy_id,
+      label:VIN
     };
     
     console.log(doc)
@@ -50,7 +63,7 @@ export default  function Page() {
 
   return (
     <>  
-      <Header />
+      <Header tag={"vehicles"} />
       <div key="1" className="flex flex-col w-full border">
       <div className="flex items-center py-4  px-4 border-b">
         <h2 className="text-sm font-semibold">List of Clients</h2>
@@ -61,8 +74,21 @@ export default  function Page() {
       <div className="flex items-center justify-between px-4 py-2">
       
         <div className="relative">
-          <SearchIcon className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500 dark:text-gray-400" />
-          <Input className="pl-8 w-full bg-white rounded-md" placeholder="Search items..." type="search" />
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button size="sm" variant="outline">
+             Show
+              <ArrowUpDownIcon className="w-4 h-4 ml-1" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="w-40">
+            <DropdownMenuRadioGroup value="default">
+              <DropdownMenuRadioItem value="default">All</DropdownMenuRadioItem>
+              <DropdownMenuRadioItem value="name">10</DropdownMenuRadioItem>
+              <DropdownMenuRadioItem value="date">20</DropdownMenuRadioItem>
+            </DropdownMenuRadioGroup>
+          </DropdownMenuContent>
+        </DropdownMenu>
         </div>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -160,6 +186,18 @@ export default  function Page() {
           <Input id="phone" placeholder="VIN" type="text"  value={VIN} onChange={(e)=>{setVIN(e.target.value)}} />
         </div>
         
+        <div className="flex flex-col col-span-2">
+          <label className="font-medium" htmlFor="city">
+         Owner
+          </label>
+         <SearchableSelect   
+            tag={"clients"}
+            value={selectedOption}
+            onChange={handleChange}
+            placeholder={selectedOption}
+         
+         />
+        </div>
         <div className="flex flex-col col-span-2">
           <label className="font-medium" htmlFor="city">
          Usage

@@ -14,6 +14,10 @@ const policySchema = new mongoose.Schema({
       type: String,
     
     },
+    label: {
+      type: String,
+    
+    },
     coverageLimit: {
       type: Number,
    

@@ -28,19 +28,22 @@ const {data,error,loading} = useFetchAll("clients")
   const [address, setAddress] = useState("");
   const [phone, setPhone] = useState("");
   const [city, setCity] = useState("");
+  const [label, setLabel] = useState(fullName);
 
 const handleSubmit = async (e) =>{
 e.preventDefault()
+setLabel(fullName)
 const doc = {
   fullName,
   IDNumber,
   email,
   address,
   phone,
-  city
+  city,
+  label:fullName
   
 }
-
+console.log(doc)
 
 insertData("clients",doc)
 
@@ -53,7 +56,7 @@ console.log(data)
 
   return (
     <>  
-      <Header />
+      <Header tag={"clients"}/>
       <div key="1" className="flex flex-col w-full">
       <div className="flex items-center py-4  px-4 border-b">
         <h2 className="text-sm font-semibold">List of Clients</h2>
@@ -65,8 +68,21 @@ console.log(data)
       <div className="flex items-center justify-between px-4 py-2">
       
         <div className="relative">
-          <SearchIcon className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500 dark:text-gray-400" />
-          <Input className="pl-8 w-full bg-white rounded-md" placeholder="Search items..." type="search" />
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button size="sm" variant="outline">
+             Show
+              <ArrowUpDownIcon className="w-4 h-4 ml-1" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="w-40">
+            <DropdownMenuRadioGroup value="default">
+              <DropdownMenuRadioItem value="default">All</DropdownMenuRadioItem>
+              <DropdownMenuRadioItem value="name">10</DropdownMenuRadioItem>
+              <DropdownMenuRadioItem value="date">20</DropdownMenuRadioItem>
+            </DropdownMenuRadioGroup>
+          </DropdownMenuContent>
+        </DropdownMenu>
         </div>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -149,6 +165,7 @@ console.log(data)
           </label>
           <Input id="name" name="fullName" value={fullName} onChange={(e)=>{setFullName(e.target.value)}} placeholder="John Doe" />
         </div>
+        {/* <input type="text" value={fullName} /> */}
         <div className="flex flex-col">
           <label className="font-medium" htmlFor="idnumber">
           ID Number

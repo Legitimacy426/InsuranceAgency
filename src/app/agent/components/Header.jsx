@@ -10,23 +10,20 @@ import Image from 'next/image'
 import { authenticate } from '../../../../libs/functions/auth'
 import useFetchAll from '../../../../hooks/useFetchAll'
 import SearchableSelect from './SearchableSelect'
-function Header() {
+import { useRouter } from 'next/navigation'
+function Header({tag}) {
   const [selectedOption, setSelectedOption] = useState(null);
 
-  // const options = [
-  //   { value: 'apple', label: 'Apple' },
-  //   { value: 'banana', label: 'Banana' },
-  //   { value: 'orange', label: 'Orange' },
-  //   { value: 'grape', label: 'Grape' },
-  //   // Add more options as needed
-  // ];
+const router = useRouter()
 
-const {data} = useFetchAll("clients")
 
 
   const handleChange = (selectedOption) => {
     setSelectedOption(selectedOption);
-    console.log(selectedOption)
+    console.log(selectedOption._id)
+    // navigate here
+    router.push(`${tag}/${selectedOption._id}`)
+
   };
   // const userId = authenticate()
   return (
@@ -96,10 +93,11 @@ const {data} = useFetchAll("clients")
               type="search"
             /> */}
          <SearchableSelect
-          options={data}
+          tag={tag}
            value={selectedOption}
            onChange={handleChange}
            placeholder={selectedOption}
+        
       />
 
           </div>

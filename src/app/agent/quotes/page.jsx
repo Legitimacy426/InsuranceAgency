@@ -23,6 +23,7 @@ import SearchableSelect from '../components/SearchableSelect'
 export default  function Page() {
 
   const [selectedOption, setSelectedOption] = useState(null);
+  const [selectedOption2, setSelectedOption2] = useState(null);
 
   const options = [
     { value: 'apple', label: 'Apple' },
@@ -33,33 +34,35 @@ export default  function Page() {
   ];
 
   const handleChange = (selectedOption) => {
-    setSelectedOption(selectedOption);
+    setSelectedOption(selectedOption._id);
+ 
+  };
+  const handleChange2 = (selectedOption2) => {
+  
+    setSelectedOption2(selectedOption2._id)
   };
   const {data,error,loading} = useFetchAll("quotes")
   // const data = await fetchAll('policies')
-  const [policyNumber, setPolicyNumber] = useState("");
-  const [policyType, setPolicyType] = useState("");
-  const [coverageLimit, setCoverageLimit] = useState("");
-  const [deductible, setDeductible] = useState("");
-  const [premium, setPremium] = useState("");
-  const [additionalCoverages, setAdditionalCoverages] = useState("");
-  const [exclusions, setExclusions] = useState("");
-  const [description, setDescription] = useState("");
+  const [comment, setComment] = useState("");
+  const [start_date, setStartDate] = useState("");
+  
+   
 
 const handleSubmit = (e)=>{
-e.preventDefault()
+  e.preventDefault()
+  // console.log(selectedOption,selectedOption2)
+
 const doc = {
-  policyNumber,
-  policyType,
-  coverageLimit,
-  deductible,
-  premium,
-  additionalCoverages,
-  exclusions,
-  description
+qoute_number: new Date().getTime(),  
+policy_id:selectedOption,
+vehicle_id:selectedOption2,
+status:"pending Approval",
+comment,
+label: new Date().getTime(),
+start_date
 }
 
-insertData('policies',doc)
+insertData('quotes',doc)
 
 console.log(doc)
 
@@ -67,7 +70,7 @@ console.log(doc)
 }
   return (
     <>  
-      <Header />
+      <Header tag={"quotes"} />
       <div key="1" className="flex flex-col w-full ">
       <div className="flex items-center py-4  px-4 border-b">
         <h2 className="text-sm font-semibold">List of Quotes</h2>
@@ -78,7 +81,21 @@ console.log(doc)
       <div className="flex items-center justify-between px-4 py-2">
       
         <div className="relative">
-          {/* <Search people={data} /> */}
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button size="sm" variant="outline">
+             Show
+              <ArrowUpDownIcon className="w-4 h-4 ml-1" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="w-40">
+            <DropdownMenuRadioGroup value="default">
+              <DropdownMenuRadioItem value="default">All</DropdownMenuRadioItem>
+              <DropdownMenuRadioItem value="name">10</DropdownMenuRadioItem>
+              <DropdownMenuRadioItem value="date">20</DropdownMenuRadioItem>
+            </DropdownMenuRadioGroup>
+          </DropdownMenuContent>
+        </DropdownMenu>
         </div>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -100,9 +117,10 @@ console.log(doc)
 <Table>
         <TableHeader>
           <TableRow>
-            <TableHead className="text-sm">Policy Number</TableHead>
-            <TableHead className="text-sm">Policy Type</TableHead>
-            <TableHead className="text-sm">Premium</TableHead>
+            <TableHead className="text-sm">Quote Number</TableHead>
+            <TableHead className="text-sm">Client</TableHead>
+            <TableHead className="text-sm">Vehicle</TableHead>
+            <TableHead className="text-sm">Start Date</TableHead>
             <TableHead className="text-sm">Actions</TableHead>
           </TableRow>
         </TableHeader>
@@ -115,10 +133,11 @@ console.log(doc)
 
  {data?.map(item =>(
       
-     <TableRow key={item.id}>
-     <TableCell className="font-medium">{item.policyNumber}</TableCell>
-     <TableCell>{item.policyType}</TableCell>
-     <TableCell>{item.premium}</TableCell>
+     <TableRow key={item._id}>
+     <TableCell className="font-medium">{item.qoute_number}</TableCell>
+     <TableCell>{item.client_id}</TableCell>
+     <TableCell>{item.vehicle_id}</TableCell>
+     <TableCell>{item.start_date}</TableCell>
      <TableCell className="space-y-3">
        <Button className="w-6 h-6" size="icon" variant="outline">
          <FileEditIcon className="h-4 w-4" />
@@ -146,34 +165,36 @@ console.log(doc)
   <div className="modal-box rounded-none">
   <div className="">
       <h2 className="text-xl font-semibold mb-4">
-      Add Quote
+    Create quote
       </h2>
       <form onSubmit={(e)=>{handleSubmit(e)}} className="grid grid-cols-2 gap-4">
       <div>
       <label>Vehicle:</label>
       <SearchableSelect
-        options={options}
-        value={selectedOption}
-        onChange={handleChange}
+       tag={"vehicles"}
+       value={selectedOption}
+       onChange={handleChange}
+       placeholder={selectedOption}
       />
        
       </div>
       <div>
       <label>Policy:</label>
       <SearchableSelect
-        options={options}
-        value={selectedOption}
-        onChange={handleChange}
+       tag={"policies"}
+       value={selectedOption2}
+       onChange={handleChange2}
+       placeholder={selectedOption}
       />
        
       </div>
       <div>
         <Label className="font-semibold">Start Date :</Label>
-        <Input defaultValue="Kes50,000" id="coverage-amount" />
+        <Input  placeholder="starting date" type="date"  onChange={(e)=>{setStartDate(e.target.value)}}/>
       </div>
       <div>
         <Label className="font-semibold">Comments:</Label>
-        <textarea placeholder="Some comments" className="textarea textarea-bordered textarea-sm w-full max-w-xs ronded-none" ></textarea>
+        <textarea placeholder="Some comments" className="textarea textarea-bordered textarea-sm w-full max-w-xs ronded-none"  onChange={(e)=>{setComment(e.target.value)}}></textarea>
       </div>
       <Button type="submit">Submit</Button>
     

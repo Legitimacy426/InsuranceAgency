@@ -6,19 +6,27 @@ const quoteSchema = new mongoose.Schema(
        
         client_id: {
           type: String,
-          required: true
+      
+        },
+        qoute_number: {
+          type: String,
+      
         },
         vehicle_id: {
           type: String,
-          required: true
+      
         },
         policy_id: {
           type: String,
-          required: true
+      
         },
         status: {
           type: String,
-          required: true
+      
+        },
+        label: {
+          type: String,
+      
         },
     
         comments: String,

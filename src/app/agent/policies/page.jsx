@@ -30,9 +30,10 @@ export default  function Page() {
   const [additionalCoverages, setAdditionalCoverages] = useState("");
   const [exclusions, setExclusions] = useState("");
   const [description, setDescription] = useState("");
-
+  const [label, setLabel] = useState(policyNumber);
 const handleSubmit = (e)=>{
 e.preventDefault()
+setLabel(policyNumber)
 const doc = {
   policyNumber,
   policyType,
@@ -41,7 +42,8 @@ const doc = {
   premium,
   additionalCoverages,
   exclusions,
-  description
+  description,
+  label:policyNumber
 }
 
 insertData('policies',doc)
@@ -52,7 +54,7 @@ console.log(doc)
 }
   return (
     <>  
-      <Header />
+      <Header tag={"policies"}/>
       <div key="1" className="flex flex-col w-full ">
       <div className="flex items-center py-4  px-4 border-b">
         <h2 className="text-sm font-semibold">List of Clients</h2>
@@ -63,7 +65,21 @@ console.log(doc)
       <div className="flex items-center justify-between px-4 py-2">
       
         <div className="relative">
-          {/* <Search people={data} /> */}
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button size="sm" variant="outline">
+             Show
+              <ArrowUpDownIcon className="w-4 h-4 ml-1" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="w-40">
+            <DropdownMenuRadioGroup value="default">
+              <DropdownMenuRadioItem value="default">All</DropdownMenuRadioItem>
+              <DropdownMenuRadioItem value="name">10</DropdownMenuRadioItem>
+              <DropdownMenuRadioItem value="date">20</DropdownMenuRadioItem>
+            </DropdownMenuRadioGroup>
+          </DropdownMenuContent>
+        </DropdownMenu>
         </div>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -138,38 +154,38 @@ console.log(doc)
           <label className="font-medium" htmlFor="name">
           Policy Number 
           </label>
-          <Input id="name" value={policyNumber} onChange={(e)=>{setPolicyNumber(e.target.value)}} placeholder="John Doe" />
+          <Input id="name" value={policyNumber} onChange={(e)=>{setPolicyNumber(e.target.value)}} placeholder="Policy Number" />
         </div>
         <div className="flex flex-col">
           <label className="font-medium" htmlFor="idnumber">
         Policy Type
           </label>
-          <Input id="idnumber" placeholder="type" type="number" onChange={(e)=>{setPolicyType(e.target.value)}}  value={policyType} />
+          <Input id="idnumber" placeholder="Policy Type" type="text" onChange={(e)=>{setPolicyType(e.target.value)}}  value={policyType} />
         </div>
         <div className="flex flex-col">
           <label className="font-medium" htmlFor="email">
-        coverage Limit
+        Coverage Limit
           </label>
           <Input id="email" placeholder="limit"  type="number" value={coverageLimit} onChange={(e)=>{setCoverageLimit(e.target.value)}}  />
         </div>
         <div className="flex flex-col">
           <label className="font-medium" htmlFor="phone">
-        deductible
+        Deductible
           </label>
-          <Input id="phone" placeholder="phone number" value={deductible} onChange={(e)=>{setDeductible(e.target.value)}}  type="text" />
+          <Input id="phone" placeholder="Deductible" value={deductible} onChange={(e)=>{setDeductible(e.target.value)}}  type="text" />
         </div>
         
         <div className="flex flex-col col-span-2">
           <label className="font-medium" htmlFor="city">
-           description 
+           Description 
           </label>
-          <Input id="city" placeholder="City"  value={description} onChange={(e)=>{setDescription(e.target.value)}} />
+          <Input id="city" placeholder="Description"  value={description} onChange={(e)=>{setDescription(e.target.value)}} />
         </div>
         <div className="flex flex-col col-span-2">
           <label className="font-medium" htmlFor="address">
            Premium
           </label>
-          <Input id="address" placeholder="Street Address" value={premium} onChange={(e)=>{setPremium(e.target.value)}}  />
+          <Input id="address" placeholder="Premium(KES)" value={premium} onChange={(e)=>{setPremium(e.target.value)}}  />
         </div>
         
         {/* <div className="flex items-center col-span-2">
