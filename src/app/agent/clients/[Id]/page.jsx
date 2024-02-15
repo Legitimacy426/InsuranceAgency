@@ -183,7 +183,7 @@ export default function Page({params}) {
           </TableRow>
         </TableHeader>
         <TableBody>
-
+{/* 
 {loading && ( <p className="flex  items-center justify-center text-center">
 <span className="loading loading-bars loading-md "></span>
 
@@ -207,7 +207,7 @@ export default function Page({params}) {
        </Button>
      </TableCell>
    </TableRow>
- ))}
+ ))} */}
  </TableBody>
       </Table>
         </CardContent>
@@ -215,7 +215,7 @@ export default function Page({params}) {
       <Card>
         <CardHeader>
           <CardTitle>Quotes</CardTitle>
-          <CardDescription>Update insured owner, policy number, and coverage amount.</CardDescription>
+          <CardDescription>Quotes the client has made .</CardDescription>
         </CardHeader>
         <CardContent className="grid gap-4">
         <Table>
@@ -230,7 +230,7 @@ export default function Page({params}) {
           </TableRow>
         </TableHeader>
         <TableBody>
-
+{/* 
 {loading && ( <p className="flex  items-center justify-center text-center">
 <span className="loading loading-bars loading-md "></span>
 
@@ -254,7 +254,7 @@ export default function Page({params}) {
        </Button>
      </TableCell>
    </TableRow>
- ))}
+ ))} */}
  </TableBody>
       </Table>
         </CardContent>
