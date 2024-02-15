@@ -8,7 +8,7 @@ import { SelectValue, SelectTrigger, SelectItem, SelectContent, Select } from "@
 import { Textarea } from "@/components/ui/textarea"
 import { Checkbox } from "@/components/ui/checkbox"
 
-
+import { CardTitle, CardContent, CardHeader, Card } from "@/components/ui/card"
 
 
 import Header from '../components/Header'
@@ -18,13 +18,14 @@ import { insertData } from '../../../../libs/functions/insertData'
 import useFetchAll from '../../../../hooks/useFetchAll'
 import { Label } from '@/components/ui/label'
 import SearchableSelect from '../components/SearchableSelect'
+import Errors from '../components/Errors'
 
 
 export default  function Page() {
 
   const [selectedOption, setSelectedOption] = useState(null);
   const [selectedOption2, setSelectedOption2] = useState(null);
-
+  const [limit, setlimit] = useState(10);
   const options = [
     { value: 'apple', label: 'Apple' },
     { value: 'banana', label: 'Banana' },
@@ -45,8 +46,10 @@ export default  function Page() {
   // const data = await fetchAll('policies')
   const [comment, setComment] = useState("");
   const [start_date, setStartDate] = useState("");
+  const expiry = start_date.getFull
+  const aYearFromNow = new Date(start_date);
+  aYearFromNow.setFullYear(aYearFromNow.getFullYear() + 1);
   
-   
 
 const handleSubmit = (e)=>{
   e.preventDefault()
@@ -59,7 +62,8 @@ vehicle_id:selectedOption2,
 status:"pending Approval",
 comment,
 label: new Date().getTime(),
-start_date
+start_date,
+end_date:aYearFromNow
 }
 
 insertData('quotes',doc)
@@ -80,39 +84,30 @@ console.log(doc)
       </div>
       <div className="flex items-center justify-between px-4 py-2">
       
-        <div className="relative">
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button size="sm" variant="outline">
-             Show
-              <ArrowUpDownIcon className="w-4 h-4 ml-1" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-40">
-            <DropdownMenuRadioGroup value="default">
-              <DropdownMenuRadioItem value="default">All</DropdownMenuRadioItem>
-              <DropdownMenuRadioItem value="name">10</DropdownMenuRadioItem>
-              <DropdownMenuRadioItem value="date">20</DropdownMenuRadioItem>
-            </DropdownMenuRadioGroup>
-          </DropdownMenuContent>
-        </DropdownMenu>
-        </div>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button size="sm" variant="outline">
-              Sort by
-              <ArrowUpDownIcon className="w-4 h-4 ml-1" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-40">
-            <DropdownMenuRadioGroup value="default">
-              <DropdownMenuRadioItem value="default">Default</DropdownMenuRadioItem>
-              <DropdownMenuRadioItem value="name">Name</DropdownMenuRadioItem>
-              <DropdownMenuRadioItem value="date">Date</DropdownMenuRadioItem>
-            </DropdownMenuRadioGroup>
-          </DropdownMenuContent>
-        </DropdownMenu>
+      <div className="relative">
+      <select className="select select-bordered rounded-sm w-full max-w-xs p-"  onChange={(e)=>{setlimit(e.target.value)}}>
+<option value={"all"}>All</option>
+<option value={10}>10</option>
+<option value={25}>25</option>
+<option value={50}>50</option>
+</select>
       </div>
+      {/* <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button size="sm" variant="outline">
+            Sort by
+            <ArrowUpDownIcon className="w-4 h-4 ml-1" />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end" className="w-40">
+          <DropdownMenuRadioGroup value="default">
+            <DropdownMenuRadioItem value="default">Default</DropdownMenuRadioItem>
+            <DropdownMenuRadioItem value="name">Name</DropdownMenuRadioItem>
+            <DropdownMenuRadioItem value="date">Date</DropdownMenuRadioItem>
+          </DropdownMenuRadioGroup>
+        </DropdownMenuContent>
+      </DropdownMenu> */}
+    </div>
 <div className="px-3">
 <Table>
         <TableHeader>
@@ -121,15 +116,14 @@ console.log(doc)
             <TableHead className="text-sm">Client</TableHead>
             <TableHead className="text-sm">Vehicle</TableHead>
             <TableHead className="text-sm">Start Date</TableHead>
+            <TableHead className="text-sm">Expiry Date</TableHead>
             <TableHead className="text-sm">Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
 
-{loading && ( <p className="flex  items-center justify-center text-center">
-<span className="loading loading-bars loading-md "></span>
 
- </p>)}
+ 
 
  {data?.map(item =>(
       
@@ -138,6 +132,7 @@ console.log(doc)
      <TableCell>{item.client_id}</TableCell>
      <TableCell>{item.vehicle_id}</TableCell>
      <TableCell>{item.start_date}</TableCell>
+     <TableCell>{item.end_date}</TableCell>
      <TableCell className="space-y-3">
        <Button className="w-6 h-6" size="icon" variant="outline">
          <FileEditIcon className="h-4 w-4" />
@@ -152,6 +147,8 @@ console.log(doc)
  ))}
  </TableBody>
       </Table>
+
+      <Errors  data={data} error={error} loading={loading}/>
 </div>
     </div>
 

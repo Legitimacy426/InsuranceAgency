@@ -9,8 +9,12 @@ import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import Header from "../../components/Header"
+import useFetchWithID from "../../../../../hooks/useFetchWithId"
 
-export default function Page() {
+export default function Page({params}) {
+  console.log(params.Id)
+   
+  const {data,error,loading} = useFetchWithID("policies",params.Id)
   return (
   <>
   <Header />
@@ -26,8 +30,8 @@ export default function Page() {
               <span>Back to Policies</span> */}
             </Link>
           </div>
-          <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl">Policy #A1B2C3</h1>
-          <p className="text-sm text-gray-500 dark:text-gray-400">Last updated on February 13, 2023</p>
+          <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl">Policy #{data.policyNumber}</h1>
+          <p className="text-sm text-gray-500 dark:text-gray-400">Last updated on {data.policyNumber}</p>
         </div>
       </div>
       <div className="bg-gray-100 border-t border-b border-gray-200 dark:bg-gray-800 dark:border-gray-800">

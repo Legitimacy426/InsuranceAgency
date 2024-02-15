@@ -17,9 +17,9 @@ export async function GET(req,{params}){
 
 export async function PUT(req,{params}){
     const {id} = params
-    const {} = await req.json()
+    const res = await req.json()
     await conn()
-    const client = await Client.findOne({_id:id})
+    const client = await Client.findByIdAndUpdate(id,res)
     return NextResponse.json(client)
 
 }

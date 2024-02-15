@@ -11,6 +11,7 @@ import { fetchAll } from '../../../../libs/functions/fetchAll'
 import { insertData } from '../../../../libs/functions/insertData'
 import useFetchAll from '../../../../hooks/useFetchAll'
 import SearchableSelect from '../components/SearchableSelect'
+import Errors from '../components/Errors'
 
 
 
@@ -27,7 +28,7 @@ export default  function Page() {
   const [policy_id, setPolicy_id] = useState("5");
   const [label, setLabel] = useState(VIN);
   const [selectedOption, setSelectedOption] = useState(null);
-
+  const [limit, setlimit] = useState(10);
 
   const handleChange = (selectedOption) => {
     setSelectedOption(selectedOption._id);
@@ -66,46 +67,37 @@ export default  function Page() {
       <Header tag={"vehicles"} />
       <div key="1" className="flex flex-col w-full border">
       <div className="flex items-center py-4  px-4 border-b">
-        <h2 className="text-sm font-semibold">List of Clients</h2>
+        <h2 className="text-sm font-semibold">List of Vehicles</h2>
         <div className="ml-auto flex gap-1.5">
         <label htmlFor="my_modal_6" className="btn btn-sm text-sm border btn-outline rounded-sm">New Vehicle</label>
         </div>
       </div>
       <div className="flex items-center justify-between px-4 py-2">
       
-        <div className="relative">
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button size="sm" variant="outline">
-             Show
-              <ArrowUpDownIcon className="w-4 h-4 ml-1" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-40">
-            <DropdownMenuRadioGroup value="default">
-              <DropdownMenuRadioItem value="default">All</DropdownMenuRadioItem>
-              <DropdownMenuRadioItem value="name">10</DropdownMenuRadioItem>
-              <DropdownMenuRadioItem value="date">20</DropdownMenuRadioItem>
-            </DropdownMenuRadioGroup>
-          </DropdownMenuContent>
-        </DropdownMenu>
-        </div>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button size="sm" variant="outline">
-              Sort by
-              <ArrowUpDownIcon className="w-4 h-4 ml-1" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-40">
-            <DropdownMenuRadioGroup value="default">
-              <DropdownMenuRadioItem value="default">Default</DropdownMenuRadioItem>
-              <DropdownMenuRadioItem value="name">Name</DropdownMenuRadioItem>
-              <DropdownMenuRadioItem value="date">Date</DropdownMenuRadioItem>
-            </DropdownMenuRadioGroup>
-          </DropdownMenuContent>
-        </DropdownMenu>
+      <div className="relative">
+      <select className="select select-bordered rounded-sm w-full max-w-xs p-"  onChange={(e)=>{setlimit(e.target.value)}}>
+<option value={"all"}>All</option>
+<option value={10}>10</option>
+<option value={25}>25</option>
+<option value={50}>50</option>
+</select>
       </div>
+      {/* <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button size="sm" variant="outline">
+            Sort by
+            <ArrowUpDownIcon className="w-4 h-4 ml-1" />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end" className="w-40">
+          <DropdownMenuRadioGroup value="default">
+            <DropdownMenuRadioItem value="default">Default</DropdownMenuRadioItem>
+            <DropdownMenuRadioItem value="name">Name</DropdownMenuRadioItem>
+            <DropdownMenuRadioItem value="date">Date</DropdownMenuRadioItem>
+          </DropdownMenuRadioGroup>
+        </DropdownMenuContent>
+      </DropdownMenu> */}
+    </div>
 <div className="px-3">
 <Table>
         <TableHeader>
@@ -119,10 +111,7 @@ export default  function Page() {
         </TableHeader>
         <TableBody>
 
-{loading && ( <p className="flex  items-center justify-center text-center">
-<span className="loading loading-bars loading-md "></span>
 
- </p>)}
 
  {data?.map(item =>(
       
@@ -145,6 +134,7 @@ export default  function Page() {
  ))}
  </TableBody>
       </Table>
+      <Errors  data={data} error={error} loading={loading}/>
 </div>
     </div>
 

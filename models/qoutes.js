@@ -39,6 +39,10 @@ const quoteSchema = new mongoose.Schema(
         },
         end_date:{
           type:Date
+        },
+        createdAt: {
+          type: Date,
+          default: Date.now
         }
       }
 )

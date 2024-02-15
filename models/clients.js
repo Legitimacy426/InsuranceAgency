@@ -11,7 +11,8 @@ import mongoose from "mongoose";
     address:String,
     phone:String,
     city:String,
-    createdDate: {
+    
+createdAt: {
       type: Date,
       default: Date.now
     }

@@ -38,7 +38,7 @@ const policySchema = new mongoose.Schema({
       type: [String],
       default: []
     },
-    createdDate: {
+    createdAt: {
       type: Date,
       default: Date.now
     }

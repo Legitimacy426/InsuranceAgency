@@ -9,18 +9,19 @@ import { SelectValue, SelectTrigger, SelectItem, SelectContent, Select } from "@
 import { Textarea } from "@/components/ui/textarea"
 import { Checkbox } from "@/components/ui/checkbox"
 
-
+import { CardTitle, CardContent, CardHeader, Card } from "@/components/ui/card"
 
 import Header from '../components/Header'
 
 import { insertData } from '../../../../libs/functions/insertData'
 import useFetchAll from '../../../../hooks/useFetchAll'
 import Link from 'next/link'
+import Errors from '../components/Errors'
 
 
 
 export default  function Page() {
-const {data,error,loading} = useFetchAll("clients")
+
 
   const [fullName, setFullName] = useState("");
   const [IDNumber, setIDNumber] = useState("");
@@ -28,8 +29,11 @@ const {data,error,loading} = useFetchAll("clients")
   const [address, setAddress] = useState("");
   const [phone, setPhone] = useState("");
   const [city, setCity] = useState("");
+  const [limit, setlimit] = useState(10);
   const [label, setLabel] = useState(fullName);
 
+
+const {data,error,loading} = useFetchAll("clients",limit)
 const handleSubmit = async (e) =>{
 e.preventDefault()
 setLabel(fullName)
@@ -68,23 +72,14 @@ console.log(data)
       <div className="flex items-center justify-between px-4 py-2">
       
         <div className="relative">
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button size="sm" variant="outline">
-             Show
-              <ArrowUpDownIcon className="w-4 h-4 ml-1" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-40">
-            <DropdownMenuRadioGroup value="default">
-              <DropdownMenuRadioItem value="default">All</DropdownMenuRadioItem>
-              <DropdownMenuRadioItem value="name">10</DropdownMenuRadioItem>
-              <DropdownMenuRadioItem value="date">20</DropdownMenuRadioItem>
-            </DropdownMenuRadioGroup>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <select className="select select-bordered rounded-sm w-full max-w-xs p-"  onChange={(e)=>{setlimit(e.target.value)}}>
+ <option value={"all"}>All</option>
+ <option value={10}>10</option>
+ <option value={25}>25</option>
+ <option value={50}>50</option>
+</select>
         </div>
-        <DropdownMenu>
+        {/* <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button size="sm" variant="outline">
               Sort by
@@ -98,7 +93,7 @@ console.log(data)
               <DropdownMenuRadioItem value="date">Date</DropdownMenuRadioItem>
             </DropdownMenuRadioGroup>
           </DropdownMenuContent>
-        </DropdownMenu>
+        </DropdownMenu> */}
       </div>
 <div className="px-3">
 <Table>
@@ -112,36 +107,36 @@ console.log(data)
             <TableHead className="text-sm">Actions</TableHead>
           </TableRow>
         </TableHeader>
-        <TableBody>
+      {!error && (
+          <TableBody>
 
-       {loading && ( <p className="flex  items-center justify-center text-center">
-       <span className="loading loading-bars loading-md "></span>
-       
-        </p>)}
+     
       
-        {data?.map(item =>(
-             
-           <TableRow key={item.id}>
-            
-            <TableCell className="font-medium"><Link href={`./clients/${item._id}`} >{item.fullName}</Link></TableCell>
-            <TableCell>{item.email}</TableCell>
-            <TableCell>{item.phone}</TableCell>
-            <TableCell>{item.IDNumber}</TableCell>
-            <TableCell>{item.address}</TableCell>
-            <TableCell className="space-y-3">
-              <Button className="w-6 h-6" size="icon" variant="outline">
-                <FileEditIcon className="h-4 w-4" />
-                <span className="sr-only">Edit</span>
-              </Button>
-              <Button className="w-6 h-6" size="icon" variant="outline">
-                <TrashIcon className="h-4 w-4" />
-                <span className="sr-only">Delete</span>
-              </Button>
-            </TableCell>
-          </TableRow>
-        ))}
-        </TableBody>
+          {data?.map(item =>(
+               
+             <TableRow key={item.id}>
+              
+              <TableCell className="font-medium"><Link href={`./clients/${item._id}`} >{item.fullName}</Link></TableCell>
+              <TableCell>{item.email}</TableCell>
+              <TableCell>{item.phone}</TableCell>
+              <TableCell>{item.IDNumber}</TableCell>
+              <TableCell>{item.address}</TableCell>
+              <TableCell className="space-y-3">
+                <Button className="w-6 h-6" size="icon" variant="outline">
+                  <FileEditIcon className="h-4 w-4" />
+                  <span className="sr-only">Edit</span>
+                </Button>
+                <Button className="w-6 h-6" size="icon" variant="outline">
+                  <TrashIcon className="h-4 w-4" />
+                  <span className="sr-only">Delete</span>
+                </Button>
+              </TableCell>
+            </TableRow>
+          ))}
+          </TableBody>
+      )}
       </Table>
+      <Errors  data={data} error={error} loading={loading}/>
 </div>
     </div>
     
@@ -222,7 +217,26 @@ console.log(data)
 
 // =====================================
 
-
+function AlertCircleIcon(props) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <circle cx="12" cy="12" r="10" />
+      <line x1="12" x2="12" y1="8" y2="12" />
+      <line x1="12" x2="12.01" y1="16" y2="16" />
+    </svg>
+  )
+}
 
 
 function ArrowUpDownIcon(props) {

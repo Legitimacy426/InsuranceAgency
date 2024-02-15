@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react'
 
-function useFetchAll(tag) {
+function useFetchAll(tag,limit) {
 
     const [error,setError] = useState('')
     const [data,setData] = useState([])
@@ -11,6 +11,7 @@ function useFetchAll(tag) {
 //http://localhost:3000/api/
     const fetchData = async () =>{
         const url = `https://insurance-agency-bice.vercel.app/api/${tag}`
+        const q = ""
         try {
           const res = await fetch(url,{cache:"no-store"})
           if(!res.ok){
@@ -21,17 +22,31 @@ function useFetchAll(tag) {
       
           const newData =  await res.json()
           setLoading(false)
+          // setData(newData)
+// apply limitering here
+           if(limit=="all"){
+           newData.sort((a, b) => a.createdAt - b.createdAt)
+            setData(newData)
+           }else{
+            while (newData.length > limit) {
+              newData.pop(); // Remove the last element
+          }
+          newData.sort((a, b) => b.createdAt - a.createdAt)
           setData(newData)
+           }
         } catch (error) {
           console.log(error)
           setLoading(false)
           setError(error.message)
         }
        }
+
+
+
 useEffect(()=>{
  
  fetchData()
-},[tag])
+},[tag,limit])
 
 
   return (

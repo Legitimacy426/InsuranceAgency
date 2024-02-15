@@ -13,7 +13,7 @@ import Image from "next/image"
 export default function Component() {
   return (
    <>
-   <Header />
+   <Header tag={"vehicles"} />
    <div className="grid gap-6 md:grid-cols-2 m-4">
       <Card className="max-w-3xl">
         <CardHeader>

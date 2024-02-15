@@ -40,7 +40,7 @@ const vehicleSchema = new mongoose.Schema({
       policy_id : {
         type:String
       },
-      createdDate: {
+      createdAt: {
         type: Date,
         default: Date.now
       }

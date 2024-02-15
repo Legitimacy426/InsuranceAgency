@@ -64,7 +64,7 @@ function Page() {
             <DollarSignIcon className="w-4 h-4 text-gray-500 dark:text-gray-400" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">$45,231.89</div>
+            <div className="text-2xl font-bold">KES 45,231.89</div>
             <p className="text-xs text-gray-500 dark:text-gray-400">+20.1% from last month</p>
           </CardContent>
         </Card>
