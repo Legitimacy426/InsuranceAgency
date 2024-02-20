@@ -23,3 +23,11 @@ export async function PUT(req,{params}){
     return NextResponse.json(client)
 
 }
+export async function DELETE(req,{params}){
+    const {id} = params
+console.log("id----------------------",id)
+    await conn()
+    await Client.findByIdAndDelete(id)
+    return NextResponse.json({message:"DELETED"})
+
+}

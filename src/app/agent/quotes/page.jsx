@@ -19,6 +19,7 @@ import useFetchAll from '../../../../hooks/useFetchAll'
 import { Label } from '@/components/ui/label'
 import SearchableSelect from '../components/SearchableSelect'
 import Errors from '../components/Errors'
+import Link from 'next/link'
 
 
 export default  function Page() {
@@ -26,13 +27,7 @@ export default  function Page() {
   const [selectedOption, setSelectedOption] = useState(null);
   const [selectedOption2, setSelectedOption2] = useState(null);
   const [limit, setlimit] = useState(10);
-  const options = [
-    { value: 'apple', label: 'Apple' },
-    { value: 'banana', label: 'Banana' },
-    { value: 'orange', label: 'Orange' },
-    { value: 'grape', label: 'Grape' },
-    // Add more options as needed
-  ];
+  
 
   const handleChange = (selectedOption) => {
     setSelectedOption(selectedOption._id);
@@ -42,9 +37,13 @@ export default  function Page() {
   
     setSelectedOption2(selectedOption2._id)
   };
-  const {data,error,loading} = useFetchAll("quotes")
+  const {qd,qe,ql} = useFetchAll("quotes")
+
+
+
+
   // const data = await fetchAll('policies')
-  const [comment, setComment] = useState("");
+  const [comments, setComment] = useState("");
   const [start_date, setStartDate] = useState("");
   const expiry = start_date.getFull
   const aYearFromNow = new Date(start_date);
@@ -60,16 +59,19 @@ qoute_number: new Date().getTime(),
 policy_id:selectedOption,
 vehicle_id:selectedOption2,
 status:"pending Approval",
-comment,
+comments,
 label: new Date().getTime(),
 start_date,
 end_date:aYearFromNow
 }
 
-insertData('quotes',doc)
+const res =  insertData('quotes',doc)
 
-console.log(doc)
-
+if(res.message){
+  alert("Failed to add Please try again")
+ }else{
+  alert("Item added succesifully")
+ }
 
 }
   return (
@@ -125,10 +127,10 @@ console.log(doc)
 
  
 
- {data?.map(item =>(
+ {qd?.map(item =>(
       
      <TableRow key={item._id}>
-     <TableCell className="font-medium">{item.qoute_number}</TableCell>
+     <TableCell className="font-medium"><Link href={`./quotes/${item._id}`}>{item.qoute_number}</Link></TableCell>
      <TableCell>{item.client_id}</TableCell>
      <TableCell>{item.vehicle_id}</TableCell>
      <TableCell>{item.start_date}</TableCell>
@@ -148,7 +150,7 @@ console.log(doc)
  </TableBody>
       </Table>
 
-      <Errors  data={data} error={error} loading={loading}/>
+      <Errors  data={qd} error={qe} loading={ql}/>
 </div>
     </div>
 
@@ -172,6 +174,7 @@ console.log(doc)
        value={selectedOption}
        onChange={handleChange}
        placeholder={selectedOption}
+       reqiured
       />
        
       </div>
@@ -182,16 +185,17 @@ console.log(doc)
        value={selectedOption2}
        onChange={handleChange2}
        placeholder={selectedOption}
+       reqiured
       />
        
       </div>
       <div>
         <Label className="font-semibold">Start Date :</Label>
-        <Input  placeholder="starting date" type="date"  onChange={(e)=>{setStartDate(e.target.value)}}/>
+        <Input reqiured  placeholder="starting date" type="date"  onChange={(e)=>{setStartDate(e.target.value)}}/>
       </div>
       <div>
         <Label className="font-semibold">Comments:</Label>
-        <textarea placeholder="Some comments" className="textarea textarea-bordered textarea-sm w-full max-w-xs ronded-none"  onChange={(e)=>{setComment(e.target.value)}}></textarea>
+        <textarea placeholder="Some comments" value={comments} className="textarea textarea-bordered textarea-sm w-full max-w-xs ronded-none"  onChange={(e)=>{setComment(e.target.value)}}></textarea>
       </div>
       <Button type="submit">Submit</Button>
     

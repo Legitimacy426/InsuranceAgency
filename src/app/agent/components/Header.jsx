@@ -66,7 +66,7 @@ const router = useRouter()
           <Package2Icon className="w-6 h-6" />
           <span className="sr-only">Insure</span>
         </Link>
-        <Link className="font-bold" href="./">
+        <Link className="font-bold" href="./dashboard">
         Dashboard
         </Link>
         <Link className="text-gray-500 dark:text-gray-400" href="./clients">
@@ -124,12 +124,9 @@ const router = useRouter()
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuLabel>My Account</DropdownMenuLabel>
+          
               <DropdownMenuSeparator />
-              <DropdownMenuItem>Settings</DropdownMenuItem>
-              <DropdownMenuItem>Support</DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>Logout</DropdownMenuItem>
+              <DropdownMenuItem><Link href={'./'}>Logout</Link></DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
       </div>

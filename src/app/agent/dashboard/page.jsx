@@ -1,3 +1,4 @@
+"use client"
 import React from 'react'
 import Link from "next/link"
 import { Input } from "@/components/ui/input"
@@ -6,76 +7,84 @@ import { CardTitle, CardHeader, CardContent, Card } from "@/components/ui/card"
 
 import Header from '../components/Header'
 import Footer from '@/app/components/Footer'
+import useFetchAll from '../../../../hooks/useFetchAll'
 
 
 function Page() {
+  const {cd,ce,cl} = useFetchAll("clients","all")
+  const {pd,pe,pl} = useFetchAll("policies","all")
+  const {qd,qe,ql} = useFetchAll("quotes","all")
+  const {vd,ve,vl} = useFetchAll("vehicles","all")
+
   return (
   <>
- <Header />
+ <Header tag={"quotes"}/>
     <div className="flex flex-col w-full min-h-screen">
    
     <main className="grid min-h-[calc(100vh_-_theme(spacing.16))] gap-4 p-4 md:gap-8 md:p-10">
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-        <Card>
+      
+       <Card>
           <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
-            <CardTitle className="text-sm font-medium">Total Policies</CardTitle>
+            <CardTitle className="text-sm font-medium">Total Clients</CardTitle>
             <PackageIcon className="w-4 h-4 text-gray-500 dark:text-gray-400" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">2,345</div>
-            <p className="text-xs text-gray-500 dark:text-gray-400">+20.1% from last year</p>
+            <div className="text-2xl font-bold"><Link href={'clients'}>{cd?.length}</Link></div>
+           
           </CardContent>
         </Card>
+    
         <Card>
           <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
-            <CardTitle className="text-sm font-medium">Total Customers</CardTitle>
+            <CardTitle className="text-sm font-medium">Total Vehicles</CardTitle>
             <UsersIcon className="w-4 h-4 text-gray-500 dark:text-gray-400" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">+2350</div>
-            <p className="text-xs text-gray-500 dark:text-gray-400">+180.1% from last year</p>
+            <div className="text-2xl font-bold"><Link href={'vehicles'}>{vd?.length}</Link></div>
+          
           </CardContent>
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
-            <CardTitle className="text-sm font-medium">Sales</CardTitle>
+            <CardTitle className="text-sm font-medium">Total Quotes</CardTitle>
             <CreditCardIcon className="w-4 h-4 text-gray-500 dark:text-gray-400" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">+12,234</div>
-            <p className="text-xs text-gray-500 dark:text-gray-400">+19% from last year</p>
+            <div className="text-2xl font-bold"><Link href={'clients'}>{qd?.length}</Link></div>
+           
           </CardContent>
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
-            <CardTitle className="text-sm font-medium">Active Now</CardTitle>
+            <CardTitle className="text-sm font-medium">Total Policies</CardTitle>
             <ActivityIcon className="w-4 h-4 text-gray-500 dark:text-gray-400" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">+573</div>
-            <p className="text-xs text-gray-500 dark:text-gray-400">+201 since last hour</p>
+            <div className="text-2xl font-bold"><Link href={'clients'}>{pd?.length}</Link></div>
+           
           </CardContent>
         </Card>
       </div>
       <div className="grid gap-4 md:grid-cols-2">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
-            <CardTitle className="text-sm font-medium">Total Revenue</CardTitle>
+            <CardTitle className="text-sm font-medium">Active clients</CardTitle>
             <DollarSignIcon className="w-4 h-4 text-gray-500 dark:text-gray-400" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">KES 45,231.89</div>
-            <p className="text-xs text-gray-500 dark:text-gray-400">+20.1% from last month</p>
+            <div className="text-2xl font-bold"><Link href={'clients'}>{pd?.length}</Link></div>
+           
           </CardContent>
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
-            <CardTitle className="text-sm font-medium">Subscriptions</CardTitle>
+            <CardTitle className="text-sm font-medium">Active Policies</CardTitle>
             <UsersIcon className="w-4 h-4 text-gray-500 dark:text-gray-400" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">+2350</div>
-            <p className="text-xs text-gray-500 dark:text-gray-400">+180.1% from last month</p>
+            <div className="text-2xl font-bold"><Link href={'clients'}>{pd?.length}</Link></div>
+         
           </CardContent>
         </Card>
       </div>

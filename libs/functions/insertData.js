@@ -19,8 +19,8 @@ export const insertData = async (tag,data) =>{
       throw new Error("Failed to insert")
     }
     
-    return await res.json({message:"success"})
+    return await res.json({message:"success",code:"success"})
     } catch (error) {
-      return {message:error.message}
+      return {message:error.message,code:"err"}
     }
 }

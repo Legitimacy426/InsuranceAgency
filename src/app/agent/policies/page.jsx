@@ -17,15 +17,19 @@ import Search from '@/app/components/Search'
 import { insertData } from '../../../../libs/functions/insertData'
 import useFetchAll from '../../../../hooks/useFetchAll'
 import Errors from '../components/Errors'
+import Link from 'next/link'
+import { deleteData } from '../../../../libs/functions/deleteData'
 
 
 
 export default  function Page() {
-  const {data,error,loading} = useFetchAll("policies")
+  const {pd,pe,pl} = useFetchAll("policies")
+  const term = "By accepting this policy, you agree to the following terms and conditions:Policy is valid for one year from the start date Claims must be filed within 30 days of the incident Additional coverage options are available for an extra fee"
+
   // const data = await fetchAll('policies')
   const [policyNumber, setPolicyNumber] = useState("");
   const [policyType, setPolicyType] = useState("");
-  const [coverageLimit, setCoverageLimit] = useState("");
+  const [coverageLimit, setCoverageLimit] = useState(term);
   const [deductible, setDeductible] = useState("");
   const [premium, setPremium] = useState("");
   const [additionalCoverages, setAdditionalCoverages] = useState("");
@@ -33,7 +37,24 @@ export default  function Page() {
   const [description, setDescription] = useState("");
   const [label, setLabel] = useState(policyNumber);
   const [limit, setlimit] = useState(10);
-const handleSubmit = (e)=>{
+
+
+  const handleDelete = (id,name) =>{
+    const resp = confirm(`Do you want to permanently delete ${name}`)
+    if(resp != 1){
+  return
+    }
+    // delete
+  if(deleteData("policies",id)){
+ alert("item deleted")
+  }else{
+   alert("Failed to delete")
+  }
+    
+  
+  }
+
+const handleSubmit =async (e)=>{
 e.preventDefault()
 setLabel(policyNumber)
 const doc = {
@@ -48,9 +69,13 @@ const doc = {
   label:policyNumber
 }
 
-insertData('policies',doc)
+const res = await insertData('policies',doc)
 
-console.log(doc)
+if(res.message){
+  alert("Failed to add Please try again")
+ }else{
+  alert("Item added succesifully")
+ }
 
 
 }
@@ -103,18 +128,20 @@ console.log(doc)
         <TableBody>
 
 
- {data?.map(item =>(
+ {pd?.map(item =>(
       
-     <TableRow key={item.id} >
-     <TableCell className="font-medium">{item.policyNumber}</TableCell>
+     <TableRow key={item._id} >
+     <TableCell className="font-medium"><Link href={`./policies/${item._id}`}>{item.policyNumber}</Link></TableCell>
      <TableCell>{item.policyType}</TableCell>
      <TableCell>{item.premium}</TableCell>
      <TableCell className="space-y-3">
-       <Button className="w-6 h-6" size="icon" variant="outline">
+    <Link href={`./policies/${item._id}`}>
+    <Button className="w-6 h-6" size="icon" variant="outline">
          <FileEditIcon className="h-4 w-4" />
          <span className="sr-only">Edit</span>
        </Button>
-       <Button className="w-6 h-6" size="icon" variant="outline">
+    </Link>
+       <Button className="w-6 h-6" size="icon" variant="outline"  onClick={()=>{handleDelete(item._id,item.label)}}>
          <TrashIcon className="h-4 w-4" />
          <span className="sr-only">Delete</span>
        </Button>
@@ -123,7 +150,7 @@ console.log(doc)
  ))}
  </TableBody>
       </Table>
-      <Errors  data={data} error={error} loading={loading}/>
+      <Errors  data={pd} error={pe} loading={pl}/>
 </div>
     </div>
 
@@ -137,45 +164,51 @@ console.log(doc)
   <div className="modal-box rounded-none">
   <div className="">
       <h2 className="text-xl font-semibold mb-4">
-      Add policy
+    New policy
       </h2>
       <form onSubmit={(e)=>{handleSubmit(e)}} className="grid grid-cols-2 gap-4">
         <div className="flex flex-col">
           <label className="font-medium" htmlFor="name">
           Policy Number 
           </label>
-          <Input id="name" value={policyNumber} onChange={(e)=>{setPolicyNumber(e.target.value)}} placeholder="Policy Number" />
+          <Input   required id="name" value={policyNumber} onChange={(e)=>{setPolicyNumber(e.target.value)}} placeholder="Policy Number" />
         </div>
         <div className="flex flex-col">
           <label className="font-medium" htmlFor="idnumber">
         Policy Type
           </label>
-          <Input id="idnumber" placeholder="Policy Type" type="text" onChange={(e)=>{setPolicyType(e.target.value)}}  value={policyType} />
+          <Input   required id="idnumber" placeholder="Policy Type" type="text" onChange={(e)=>{setPolicyType(e.target.value)}}  value={policyType} />
         </div>
-        <div className="flex flex-col">
+        {/* <div className="flex flex-col">
           <label className="font-medium" htmlFor="email">
         Coverage Limit
           </label>
           <Input id="email" placeholder="limit"  type="number" value={coverageLimit} onChange={(e)=>{setCoverageLimit(e.target.value)}}  />
-        </div>
-        <div className="flex flex-col">
+        </div> */}
+        {/* <div className="flex flex-col">
           <label className="font-medium" htmlFor="phone">
         Deductible
           </label>
           <Input id="phone" placeholder="Deductible" value={deductible} onChange={(e)=>{setDeductible(e.target.value)}}  type="text" />
-        </div>
+        </div> */}
         
         <div className="flex flex-col col-span-2">
           <label className="font-medium" htmlFor="city">
-           Description 
+          Terms & Conditions 
           </label>
-          <Input id="city" placeholder="Description"  value={description} onChange={(e)=>{setDescription(e.target.value)}} />
+          <Textarea  required  id="city" placeholder={term}  value={coverageLimit} onChange={(e)=>{setCoverageLimit(e.target.value)}}   />
+        </div>
+        <div className="flex flex-col col-span-2">
+          <label className="font-medium" htmlFor="city">
+        Additional Notes
+          </label>
+          <Textarea  required  id="city" placeholder="Some notes..."  value={description} onChange={(e)=>{setDescription(e.target.value)}} />
         </div>
         <div className="flex flex-col col-span-2">
           <label className="font-medium" htmlFor="address">
            Premium
           </label>
-          <Input id="address" placeholder="Premium(KES)" value={premium} onChange={(e)=>{setPremium(e.target.value)}}  />
+          <Input   required id="address" placeholder="Premium(KES)" value={premium} onChange={(e)=>{setPremium(e.target.value)}}  />
         </div>
         
         {/* <div className="flex items-center col-span-2">

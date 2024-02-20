@@ -45,8 +45,12 @@ export default function Page({params}) {
     console.log(doc)
     
     // insertData("clients",doc)
-    updateData("clients",doc,params.Id)
-
+    const res = await updateData("clients",doc,params.Id)
+    if(res.message){
+      alert("Failed to update")
+     }else{
+      alert("Item updated succesifully")
+     }
     
     }
   

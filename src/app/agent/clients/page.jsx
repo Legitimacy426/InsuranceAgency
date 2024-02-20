@@ -17,6 +17,7 @@ import { insertData } from '../../../../libs/functions/insertData'
 import useFetchAll from '../../../../hooks/useFetchAll'
 import Link from 'next/link'
 import Errors from '../components/Errors'
+import { deleteData } from '../../../../libs/functions/deleteData'
 
 
 
@@ -33,7 +34,25 @@ export default  function Page() {
   const [label, setLabel] = useState(fullName);
 
 
-const {data,error,loading} = useFetchAll("clients",limit)
+const {cd,ce,cl} = useFetchAll("clients",limit)
+
+
+const handleDelete = (id,name) =>{
+  const resp = confirm(`Do you want to permanently delete ${name}`)
+  if(resp != 1){
+return
+  }
+  // delete
+if(deleteData("clients",id)){
+alert("Item deleted")
+}else{
+ alert("Failed to delete")
+}
+  
+
+}
+
+
 const handleSubmit = async (e) =>{
 e.preventDefault()
 setLabel(fullName)
@@ -49,13 +68,19 @@ const doc = {
 }
 console.log(doc)
 
-insertData("clients",doc)
+const res = await insertData("clients",doc)
+
+if(res.message){
+ alert("Failed to add Please try again")
+}else{
+ alert("Item added succesifully")
+}
 
 }
 
 
 
-console.log(data)
+console.log(cd)
  
 
   return (
@@ -107,12 +132,12 @@ console.log(data)
             <TableHead className="text-sm">Actions</TableHead>
           </TableRow>
         </TableHeader>
-      {!error && (
+      {!ce && (
           <TableBody>
 
      
       
-          {data?.map(item =>(
+          {cd?.map(item =>(
                
              <TableRow key={item.id}>
               
@@ -126,7 +151,7 @@ console.log(data)
                   <FileEditIcon className="h-4 w-4" />
                   <span className="sr-only">Edit</span>
                 </Button>
-                <Button className="w-6 h-6" size="icon" variant="outline">
+                <Button className="w-6 h-6" size="icon" variant="outline" onClick={()=>{handleDelete(item._id,item.fullName)}}>
                   <TrashIcon className="h-4 w-4" />
                   <span className="sr-only">Delete</span>
                 </Button>
@@ -136,7 +161,7 @@ console.log(data)
           </TableBody>
       )}
       </Table>
-      <Errors  data={data} error={error} loading={loading}/>
+      <Errors  data={cd} error={ce} loading={cl}/>
 </div>
     </div>
     

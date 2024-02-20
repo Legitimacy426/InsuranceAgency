@@ -10,7 +10,7 @@ function useFetchAll(tag,limit) {
 // https://insurance-agency-bice.vercel.app/api/
 //http://localhost:3000/api/
     const fetchData = async () =>{
-        const url = `https://insurance-agency-bice.vercel.app/api/${tag}`
+        const url = `http://localhost:3000/api/${tag}`
         const q = ""
         try {
           const res = await fetch(url,{cache:"no-store"})
@@ -48,10 +48,23 @@ useEffect(()=>{
  fetchData()
 },[tag,limit])
 
+{switch(tag) {
+  case "clients":
+    return ( {ce:error,cd:data,cl:loading})
+   
+  case "vehicles":
+    return ( {ve:error,vd:data,vl:loading})
 
-  return (
- {error,data,loading}
-  )
+  case "policies":
+    return ( {pe:error,pd:data,pl:loading})
+    
+  case "quotes":
+    return ( {qe:error,qd:data,ql:loading})
+
+  default:
+    return ( {error,data,loading})
+} }
+
 }
 
 export default useFetchAll

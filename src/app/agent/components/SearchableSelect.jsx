@@ -6,7 +6,29 @@ import Select from 'react-select';
 import useFetchAll from '../../../../hooks/useFetchAll';
 
 const SearchableSelect = ({tag,onChange, value, }) => {
-  const {data} = useFetchAll(tag)
+  let data
+  switch(tag) {
+    case "clients":
+      const {cd} = useFetchAll(tag)
+      data = cd
+      break;
+    case "vehicles":
+      const {vd} = useFetchAll(tag)
+      data = vd
+  break
+    case "policies":
+     
+    const {pd} = useFetchAll(tag)
+    data = pd
+    break
+    case "quotes":
+      const {qd} = useFetchAll(tag)
+      data = qd
+  break
+    default:
+   data = []
+  }
+
   const options = [
     { name: 'apple', label: 'Apple' },
     { name: 'banana', label: 'Banana' },

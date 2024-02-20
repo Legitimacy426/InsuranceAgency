@@ -1,8 +1,11 @@
+"use client"
 /**
  * v0 by Vercel.
- * @see https://v0.dev/t/0BvCPdPf1WT
+ * @see https://v0.dev/t/0BvCdataPf1WT
  * Documentation: https://v0.dev/docs#integrating-generated-code-into-your-nextjs-app
  */
+
+'use client'
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
@@ -10,14 +13,51 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import Header from "../../components/Header"
 import useFetchWithID from "../../../../../hooks/useFetchWithId"
+import { useState } from "react"
+import { updateData } from "../../../../../libs/functions/updateData"
 
 export default function Page({params}) {
   console.log(params.Id)
+  const [policyNumber, setPolicyNumber] = useState("");
+  const [policyType, setPolicyType] = useState("");
+  const [coverageLimit, setCoverageLimit] = useState('');
+  const [deductible, setDeductible] = useState("");
+  const [premium, setPremium] = useState("");
+  const [additionalCoverages, setAdditionalCoverages] = useState("");
+  const [exclusions, setExclusions] = useState("");
+  const [description, setDescription] = useState("");
+  const [label, setLabel] = useState(policyNumber);
+  const [limit, setlimit] = useState(10);
+
+
    
-  const {data,error,loading} = useFetchWithID("policies",params.Id)
+  const {data,pe,pl} = useFetchWithID("policies",params.Id)
+
+
+  // updating================
+
+  const handleSubmit = async (e) =>{
+    e.preventDefault()
+  
+    const doc = {
+      premium,
+      description,
+      coverageLimit
+    }
+    console.log(doc)
+    
+    // insertData("clients",doc)
+    const res = await updateData("policies",doc,params.Id)
+    if(res.message){
+      alert("Failed to update")
+     }else{
+      alert("Item updated succesifully")
+     }
+    
+    }
   return (
   <>
-  <Header />
+  <Header tag={"policies"}/>
   <div className="grid min-h-screen items-start space-y-0 text-sm lg:space-y-12 m-4">
       <div className="container py-6">
         <div className="flex flex-col min-h-0 space-y-2">
@@ -30,8 +70,8 @@ export default function Page({params}) {
               <span>Back to Policies</span> */}
             </Link>
           </div>
-          <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl">Policy #{data.policyNumber}</h1>
-          <p className="text-sm text-gray-500 dark:text-gray-400">Last updated on {data.policyNumber}</p>
+          <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl">Policy #{data?.policyNumber}</h1>
+          <p className="text-sm text-gray-500 dark:text-gray-400">Last updated on {data?.createdAt}</p>
         </div>
       </div>
       <div className="bg-gray-100 border-t border-b border-gray-200 dark:bg-gray-800 dark:border-gray-800">
@@ -48,7 +88,7 @@ export default function Page({params}) {
             </div>
             <div className="flex items-center justify-end space-x-4">
               <Button size="sm" variant="outline">
-                +25746121315
+              KES    {data?.premium}
               </Button>
               <Button size="sm" variant="outline">
                 Download PDF
@@ -61,16 +101,17 @@ export default function Page({params}) {
         <div className="grid gap-6 lg:grid-cols-2 xl:grid-cols-3">
           <div className="space-y-4">
             <div className="grid gap-1">
-              <h2 className="text-lg font-semibold">Coverage</h2>
+              <h2 className="text-lg font-semibold">Description</h2>
               <p className="text-sm text-gray-500 dark:text-gray-400">
-                This policy provides coverage for a variety of scenarios, including but not limited to:
+             
               </p>
             </div>
             <div className="grid gap-4">
               <ul className="grid gap-2">
-                <li>Accidental damage</li>
+                {/* <li>Accidental damage</li>
                 <li>Theft</li>
-                <li>Natural disasters</li>
+                <li>Natural disasters</li> */}
+                 {data?.description}
               </ul>
             </div>
           </div>
@@ -78,18 +119,19 @@ export default function Page({params}) {
             <div className="grid gap-1">
               <h2 className="text-lg font-semibold">Terms & Conditions</h2>
               <p className="text-sm text-gray-500 dark:text-gray-400">
-                By accepting this policy, you agree to the following terms and conditions:
+              
               </p>
             </div>
             <div className="grid gap-4">
               <ul className="grid gap-2">
-                <li>Policy is valid for one year from the start date</li>
+                {/* <li>Policy is valid for one year from the start date</li>
                 <li>Claims must be filed within 30 days of the incident</li>
-                <li>Additional coverage options are available for an extra fee{"\n                              "}</li>
+                <li>Additional coverage options are available for an extra fee{"\n                              "}</li> */}
+                <li>{data?.coverageLimit}</li>
               </ul>
             </div>
           </div>
-          <div className="space-y-4">
+          {/* <div className="space-y-4">
             <div className="grid gap-1">
               <h2 className="text-lg font-semibold">Additional Notes</h2>
               <p className="text-sm text-gray-500 dark:text-gray-400">
@@ -103,30 +145,53 @@ export default function Page({params}) {
                 <li>Contact customer support for assistance</li>
               </ul>
             </div>
-          </div>
+          </div> */}
         </div>
         <div className="grid max-w-sm gap-2 min-[400px]:max-w-none">
-          <form className="grid gap-4">
-            <div className="grid gap-2">
-              <Label className="text-sm" htmlFor="coverage">
-                Coverage Amount (KES)
-              </Label>
-              <Input id="coverage" placeholder="Enter coverage amount" />
-            </div>
-            <div className="grid gap-2">
-              <Label className="text-sm" htmlFor="renewal">
-              Premium(KES)
-              </Label>
-              <Input id="renewal" type="number" />
-            </div>
-            <div className="grid gap-2">
-              <Label className="text-sm" htmlFor="notes">
-                Additional Notes
-              </Label>
-              <Textarea className="min-h-[100px] resize-y" id="notes" placeholder="Enter additional notes" />
-            </div>
-            <Button type="submit">Save Changes</Button>
-          </form>
+        <form onSubmit={(e)=>{handleSubmit(e)}} className="grid grid-cols-2 gap-4">
+       
+        {/* <div className="flex flex-col">
+          <label className="font-medium" htmlFor="email">
+        Coverage Limit
+          </label>
+          <Input id="email" placeholder="limit"  type="number" value={coverageLimit} onChange={(e)=>{setCoverageLimit(e.target.value)}}  />
+        </div> */}
+        {/* <div className="flex flex-col">
+          <label className="font-medium" htmlFor="phone">
+        Deductible
+          </label>
+          <Input id="phone" placeholder="Deductible" value={deductible} onChange={(e)=>{setDeductible(e.target.value)}}  type="text" />
+        </div> */}
+        
+        <div className="flex flex-col col-span-2">
+          <label className="font-medium" htmlFor="city">
+          Terms & Conditions 
+          </label>
+          <Textarea  required  id="city" placeholder={'new terms and condtions'}  value={coverageLimit} onChange={(e)=>{setCoverageLimit(e.target.value)}}   />
+        </div>
+        <div className="flex flex-col col-span-2">
+          <label className="font-medium" htmlFor="city">
+        Additional Notes
+          </label>
+          <Textarea  required  id="city" placeholder="Some notes..."  value={description} onChange={(e)=>{setDescription(e.target.value)}} />
+        </div>
+        <div className="flex flex-col col-span-2">
+          <label className="font-medium" htmlFor="address">
+           Premium
+          </label>
+          <Input   required id="address" placeholder="Premium(KES)" value={premium} onChange={(e)=>{setPremium(e.target.value)}}  />
+        </div>
+        
+        {/* <div className="flex items-center col-span-2">
+          <Checkbox id="terms" />
+          <label className="text-sm ml-2" htmlFor="terms">
+            By clicking Submit, you agree to our updated Privacy Policy terms and conditions.
+          </label>
+        </div> */}
+        <div className="col-span-2">
+          <Button className="w-full">Submit</Button>
+        </div>
+      </form>
         </div>
       </div>
     </div>

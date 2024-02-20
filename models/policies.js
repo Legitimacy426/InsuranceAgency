@@ -19,7 +19,7 @@ const policySchema = new mongoose.Schema({
     
     },
     coverageLimit: {
-      type: Number,
+      type: String,
    
     },
     deductible: {

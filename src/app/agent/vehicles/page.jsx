@@ -12,11 +12,14 @@ import { insertData } from '../../../../libs/functions/insertData'
 import useFetchAll from '../../../../hooks/useFetchAll'
 import SearchableSelect from '../components/SearchableSelect'
 import Errors from '../components/Errors'
+import Link from 'next/link'
+import { deleteData } from '../../../../libs/functions/deleteData'
+import { authenticate } from '../../../../libs/functions/auth'
 
 
 
 export default  function Page() {
-  const {data,error,loading} = useFetchAll("vehicles")
+  const {vd,ve,vl} = useFetchAll("vehicles")
   const [model, setModel] = useState("");
   const [make, setMake] = useState("");
   const [year, setYear] = useState(2022);
@@ -29,7 +32,7 @@ export default  function Page() {
   const [label, setLabel] = useState(VIN);
   const [selectedOption, setSelectedOption] = useState(null);
   const [limit, setlimit] = useState(10);
-
+ authenticate()
   const handleChange = (selectedOption) => {
     setSelectedOption(selectedOption._id);
     console.log(selectedOption._id)
@@ -38,7 +41,25 @@ export default  function Page() {
 
   };
 
-  const handleSubmit = (e) =>{
+
+  const handleDelete = (id,name) =>{
+    const resp = confirm(`Do you want to permanently delete ${name}`)
+    if(resp != 1){
+  return
+    }
+    // delete
+  if(deleteData("vehicles",id)){
+  alert("Item deleted")
+  }else{
+   alert("Failed to delete")
+  }
+    
+  
+  }
+
+
+
+  const handleSubmit = async (e) =>{
 
     e.preventDefault()
     setLabel(VIN)
@@ -54,10 +75,14 @@ export default  function Page() {
       policy_id,
       label:VIN
     };
-    
-    console.log(doc)
+  
 
-    insertData("vehicles",doc)
+    const res = await insertData("vehicles",doc)
+   if(res.message){
+    alert("Failed to add Please try again")
+   }else{
+    alert("Item added succesifully")
+   }
   }
 
   // const data = await fetchAll('clients')
@@ -102,10 +127,11 @@ export default  function Page() {
 <Table>
         <TableHeader>
           <TableRow>
+          <TableHead className="text-sm">VIN</TableHead>
             <TableHead className="text-sm">Make</TableHead>
             <TableHead className="text-sm">Model</TableHead>
             <TableHead className="text-sm">Year</TableHead>
-            <TableHead className="text-sm">VIN</TableHead>
+        
             <TableHead className="text-sm">Actions</TableHead>
           </TableRow>
         </TableHeader>
@@ -113,19 +139,20 @@ export default  function Page() {
 
 
 
- {data?.map(item =>(
+ {vd?.map(item =>(
       
      <TableRow key={item.id}>
+        <TableCell><Link href={`./vehicles/${item._id}`}>{item.VIN}</Link></TableCell>
      <TableCell className="font-medium">{item.make}</TableCell>
      <TableCell>{item.model}</TableCell>
      <TableCell>{item.year}</TableCell>
-     <TableCell>{item.VIN}</TableCell>
+   
      <TableCell className="space-y-3">
-       <Button className="w-6 h-6" size="icon" variant="outline">
+     <Link href={`./vehicles/${item._id}`}><Button className="w-6 h-6" size="icon" variant="outline">
          <FileEditIcon className="h-4 w-4" />
          <span className="sr-only">Edit</span>
-       </Button>
-       <Button className="w-6 h-6" size="icon" variant="outline">
+       </Button></Link>
+       <Button className="w-6 h-6" size="icon" variant="outline"  onClick={()=>{handleDelete(item._id,item.label)}}>
          <TrashIcon className="h-4 w-4" />
          <span className="sr-only">Delete</span>
        </Button>
@@ -134,7 +161,7 @@ export default  function Page() {
  ))}
  </TableBody>
       </Table>
-      <Errors  data={data} error={error} loading={loading}/>
+      <Errors  data={vd} error={ve} loading={vl}/>
 </div>
     </div>
 
