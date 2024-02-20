@@ -14,7 +14,7 @@ import { CardTitle, CardContent, CardHeader, Card } from "@/components/ui/card"
 import Header from '../components/Header'
 
 import { insertData } from '../../../../libs/functions/insertData'
-import useFetchAll from '../../../../hooks/useFetchAll'
+import FetchAll from '../../../../hooks/FetchAll'
 import Link from 'next/link'
 import Errors from '../components/Errors'
 import { deleteData } from '../../../../libs/functions/deleteData'
@@ -34,7 +34,7 @@ export default  function Page() {
   const [label, setLabel] = useState(fullName);
 
 
-const {cd,ce,cl} = useFetchAll("clients",limit)
+const {cd,ce,cl} = FetchAll("clients",limit)
 
 
 const handleDelete = (id,name) =>{

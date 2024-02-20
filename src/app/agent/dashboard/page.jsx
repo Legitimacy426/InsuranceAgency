@@ -7,7 +7,7 @@ import { CardTitle, CardHeader, CardContent, Card } from "@/components/ui/card"
 
 import Header from '../components/Header'
 import Footer from '@/app/components/Footer'
-import useFetchAll from '../../../../hooks/useFetchAll'
+import useFetchAll from '../../../../hooks/FetchAll'
 
 
 function Page() {

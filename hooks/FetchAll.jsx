@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react'
 
-function useFetchAll(tag,limit) {
+function FetchAll(tag,limit) {
 
     const [error,setError] = useState('')
     const [data,setData] = useState([])
@@ -41,12 +41,9 @@ function useFetchAll(tag,limit) {
         }
        }
 
-
-
-useEffect(()=>{
- 
- fetchData()
-},[tag,limit])
+       useEffect(()=>{
+        fetchData()
+       },[tag,limit])
 
 {switch(tag) {
   case "clients":
@@ -67,4 +64,4 @@ useEffect(()=>{
 
 }
 
-export default useFetchAll
+export default FetchAll

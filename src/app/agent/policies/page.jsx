@@ -15,7 +15,7 @@ import Header from '../components/Header'
 import { fetchAll } from '../../../../libs/functions/fetchAll'
 import Search from '@/app/components/Search'
 import { insertData } from '../../../../libs/functions/insertData'
-import useFetchAll from '../../../../hooks/useFetchAll'
+import FetchAll from '../../../../hooks/FetchAll'
 import Errors from '../components/Errors'
 import Link from 'next/link'
 import { deleteData } from '../../../../libs/functions/deleteData'
@@ -23,7 +23,7 @@ import { deleteData } from '../../../../libs/functions/deleteData'
 
 
 export default  function Page() {
-  const {pd,pe,pl} = useFetchAll("policies")
+  const {pd,pe,pl} = FetchAll("policies")
   const term = "By accepting this policy, you agree to the following terms and conditions:Policy is valid for one year from the start date Claims must be filed within 30 days of the incident Additional coverage options are available for an extra fee"
 
   // const data = await fetchAll('policies')

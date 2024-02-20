@@ -15,7 +15,7 @@ import Header from '../components/Header'
 import { fetchAll } from '../../../../libs/functions/fetchAll'
 import Search from '@/app/components/Search'
 import { insertData } from '../../../../libs/functions/insertData'
-import useFetchAll from '../../../../hooks/useFetchAll'
+import FetchAll from '../../../../hooks/FetchAll'
 import { Label } from '@/components/ui/label'
 import SearchableSelect from '../components/SearchableSelect'
 import Errors from '../components/Errors'
@@ -37,7 +37,7 @@ export default  function Page() {
   
     setSelectedOption2(selectedOption2._id)
   };
-  const {qd,qe,ql} = useFetchAll("quotes")
+  const {qd,qe,ql} = FetchAll("quotes")
 
 
 

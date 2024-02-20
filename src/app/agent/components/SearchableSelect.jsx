@@ -3,26 +3,26 @@
 "use client"
 import React from 'react';
 import Select from 'react-select';
-import useFetchAll from '../../../../hooks/useFetchAll';
+import FetchAll from '../../../../hooks/FetchAll';
 
 const SearchableSelect = ({tag,onChange, value, }) => {
   let data
   switch(tag) {
     case "clients":
-      const {cd} = useFetchAll(tag)
+      const {cd} = FetchAll(tag)
       data = cd
       break;
     case "vehicles":
-      const {vd} = useFetchAll(tag)
+      const {vd} = FetchAll(tag)
       data = vd
   break
     case "policies":
      
-    const {pd} = useFetchAll(tag)
+    const {pd} = FetchAll(tag)
     data = pd
     break
     case "quotes":
-      const {qd} = useFetchAll(tag)
+      const {qd} = FetchAll(tag)
       data = qd
   break
     default:

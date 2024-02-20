@@ -9,7 +9,7 @@ import { DropdownMenuTrigger, DropdownMenuRadioItem, DropdownMenuRadioGroup, Dro
 import Header from '../components/Header'
 import { fetchAll } from '../../../../libs/functions/fetchAll'
 import { insertData } from '../../../../libs/functions/insertData'
-import useFetchAll from '../../../../hooks/useFetchAll'
+import FetchAll from '../../../../hooks/FetchAll'
 import SearchableSelect from '../components/SearchableSelect'
 import Errors from '../components/Errors'
 import Link from 'next/link'
@@ -19,7 +19,7 @@ import { authenticate } from '../../../../libs/functions/auth'
 
 
 export default  function Page() {
-  const {vd,ve,vl} = useFetchAll("vehicles")
+  const {vd,ve,vl} = FetchAll("vehicles")
   const [model, setModel] = useState("");
   const [make, setMake] = useState("");
   const [year, setYear] = useState(2022);
@@ -32,7 +32,7 @@ export default  function Page() {
   const [label, setLabel] = useState(VIN);
   const [selectedOption, setSelectedOption] = useState(null);
   const [limit, setlimit] = useState(10);
- authenticate()
+
   const handleChange = (selectedOption) => {
     setSelectedOption(selectedOption._id);
     console.log(selectedOption._id)
