@@ -15,11 +15,14 @@ import Errors from '../components/Errors'
 import Link from 'next/link'
 import { deleteData } from '../../../../libs/functions/deleteData'
 import { authenticate } from '../../../../libs/functions/auth'
+import useFetchWithID from '../../../../hooks/useFetchWithId'
+import { FindLabel, FindLabelW, findLabel } from '../../../../libs/functions/findLabel'
+
 
 
 
 export default  function Page() {
-  const {vd,ve,vl} = FetchAll("vehicles")
+
   const [model, setModel] = useState("");
   const [make, setMake] = useState("");
   const [year, setYear] = useState(2022);
@@ -31,14 +34,19 @@ export default  function Page() {
   const [policy_id, setPolicy_id] = useState("5");
   const [label, setLabel] = useState(VIN);
   const [selectedOption, setSelectedOption] = useState(null);
+  const [selectedOption2, setSelectedOption2] = useState(null);
   const [limit, setlimit] = useState(10);
+  const {vd,ve,vl} = FetchAll("vehicles",limit)
+
+
 
   const handleChange = (selectedOption) => {
     setSelectedOption(selectedOption._id);
-    console.log(selectedOption._id)
-    // navigate here
-   
-
+ 
+  };
+  const handleChange2 = (selectedOption2) => {
+  
+    setSelectedOption2(selectedOption2._id)
   };
 
 
@@ -72,7 +80,7 @@ export default  function Page() {
       mileage,
       client_id:selectedOption,
       antiTheftDevice,
-      policy_id,
+      policy_id:selectedOption2,
       label:VIN
     };
   
@@ -128,9 +136,11 @@ export default  function Page() {
         <TableHeader>
           <TableRow>
           <TableHead className="text-sm">VIN</TableHead>
+          <TableHead className="text-sm">Owner</TableHead>
             <TableHead className="text-sm">Make</TableHead>
             <TableHead className="text-sm">Model</TableHead>
             <TableHead className="text-sm">Year</TableHead>
+            <TableHead className="text-sm">Policy</TableHead>
         
             <TableHead className="text-sm">Actions</TableHead>
           </TableRow>
@@ -140,12 +150,15 @@ export default  function Page() {
 
 
  {vd?.map(item =>(
-      
-     <TableRow key={item.id}>
+ 
+   
+      <TableRow key={item.id}>
         <TableCell><Link href={`./vehicles/${item._id}`}>{item.VIN}</Link></TableCell>
+        <TableCell><Link href={`./vehicles/${item._id}`}><FindLabel tag={"clients"} id={item.client_id} /></Link></TableCell>
      <TableCell className="font-medium">{item.make}</TableCell>
      <TableCell>{item.model}</TableCell>
      <TableCell>{item.year}</TableCell>
+     <TableCell><FindLabel tag={"policies"} id={item.policy_id} /></TableCell>
    
      <TableCell className="space-y-3">
      <Link href={`./vehicles/${item._id}`}><Button className="w-6 h-6" size="icon" variant="outline">
@@ -158,6 +171,8 @@ export default  function Page() {
        </Button>
      </TableCell>
    </TableRow>
+   
+    
  ))}
  </TableBody>
       </Table>
@@ -214,6 +229,18 @@ export default  function Page() {
             placeholder={selectedOption}
          
          />
+        </div>
+        <div className="flex flex-col col-span-2">
+          <label className="font-medium" htmlFor="city">
+         Policy
+          </label>
+          <SearchableSelect
+       tag={"policies"}
+       value={selectedOption2}
+       onChange={handleChange2}
+       placeholder={selectedOption}
+       reqiured
+      />
         </div>
         <div className="flex flex-col col-span-2">
           <label className="font-medium" htmlFor="city">

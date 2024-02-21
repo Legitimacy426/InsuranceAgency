@@ -1,7 +1,7 @@
 export const deleteData = async (tag,id) =>{
     // https://insurance-agency-bice.vercel.app/api/
     // http://localhost:3000/api/
-      const url = `https://insurance-agency-bice.vercel.app/api/${tag}/${id}`
+      const url = `http://localhost:3000/api//${tag}/${id}`
       try {
         const res = await fetch(url,{
         method:"DELETE",

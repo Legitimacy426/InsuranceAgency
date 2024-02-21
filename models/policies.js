@@ -45,5 +45,5 @@ const policySchema = new mongoose.Schema({
   
   });
 
- export const Policy = mongoose.model('Policy', policySchema);
+ export const Policy = mongoose.models.Policy || mongoose.model('Policy', policySchema);
 

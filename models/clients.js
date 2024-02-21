@@ -19,4 +19,7 @@ createdAt: {
    
  })
 
- export const Client = mongoose.model("client",clientSchema)
+ export const Client = mongoose.models.client || mongoose.model("client",clientSchema)
+
+
+

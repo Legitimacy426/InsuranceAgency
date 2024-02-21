@@ -1,8 +1,11 @@
 "use client"
 
 import React, { useEffect, useState } from 'react'
+import { conn } from '../libs/mongoDB'
 
-function useFetchWithID(tag,id) {
+
+
+function useFetchWithIDWhere(tag,id,q) {
 
     const [error,setError] = useState('')
     const [data,setData] = useState([])
@@ -11,14 +14,10 @@ function useFetchWithID(tag,id) {
     const fetchData = async () =>{
         const url = `https://insurance-agency-bice.vercel.app/api/${tag}/${id}`
         try {
-          const res = await fetch(url,{cache:"no-store"})
-          if(!res.ok){
-             setError("Failed to fetch")
-              throw new Error("Failed to fetch")
-             
-          }
+         await conn()
+         const newData = []
       
-          const newData =  await res.json()
+       console.log("newDat>...........",newData)
           setLoading(false)
           setData(newData)
         } catch (error) {
@@ -30,8 +29,8 @@ function useFetchWithID(tag,id) {
 useEffect(()=>{
  
  fetchData()
-},[id,tag])
+},[id])
 return ({data,error,loading})
 }
 
-export default useFetchWithID
+export default useFetchWithIDWhere

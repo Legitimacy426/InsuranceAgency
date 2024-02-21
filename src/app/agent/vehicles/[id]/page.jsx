@@ -14,6 +14,8 @@ import useFetchWithID from "../../../../../hooks/useFetchWithId"
 import { useState } from "react"
 import SearchableSelect from "../../components/SearchableSelect"
 import { updateData } from "../../../../../libs/functions/updateData"
+import { FindExpiry, FindLabel, FindPremium } from "../../../../../libs/functions/findLabel"
+import LoadingScreen from "../../components/LoadingScreen"
 
 export default function Component({params}) {
   const [model, setModel] = useState("");
@@ -71,7 +73,8 @@ export default function Component({params}) {
    <>
    <Header tag={"vehicles"} />
    <div className="grid gap-6 md:grid-cols-2 m-4">
-      <Card className="max-w-3xl">
+  {!loading && (
+        <Card className="max-w-3xl">
         <CardHeader>
           <CardTitle>Vehicle Details</CardTitle>
           <CardDescription>Make, model, and year of the insured vehicle.</CardDescription>
@@ -102,7 +105,10 @@ export default function Component({params}) {
           </div>
         </CardContent>
       </Card>
-      <Card className="max-w-3xl">
+  )}
+  {loading && (<LoadingScreen />)}
+    {!loading && (
+        <Card className="max-w-3xl">
         <CardHeader>
           <CardTitle>Insurance Coverage</CardTitle>
           <CardDescription>Policy number and owner details.</CardDescription>
@@ -111,19 +117,25 @@ export default function Component({params}) {
           <div className="grid gap-2">
             <div className="flex items-center gap-2">
               <CheckCircleIcon className="h-4 w-4 text-gray-500" />
-              <div className="text-2xl font-bold">Policy #123456789</div>
+              <div className="text-2xl font-bold">Policy #<FindLabel tag={'policies'} id={data.policy_id} /></div>
             </div>
             <div className="grid gap-1">
               <div className="text-sm font-medium">Insured Owner</div>
-              <div className="text-xl font-semibold">John Doe</div>
+              <div className="text-xl font-semibold"><FindLabel tag={'clients'} id={data.client_id} /></div>
             </div>
             <div className="grid gap-1">
-              <div className="text-sm font-medium">Coverage Amount</div>
-              <div className="text-xl font-semibold">KES 3000</div>
+              <div className="text-sm font-medium">Premium</div>
+              <div className="text-xl font-semibold">KES <FindPremium tag={'policies'} id={data.policy_id} /></div>
             </div>
+            {/* <div className="grid gap-1">
+              <div className="text-sm font-medium">Expires on</div>
+              <div className="text-xl font-semibold"><FindExpiry tag={'quotes'} id={data.policy_id} /></div>
+            </div> */}
           </div>
         </CardContent>
       </Card>
+    )}
+    {loading && (<LoadingScreen />)}
       <Card>
         <CardHeader>
           <CardTitle>Edit Vehicle Details</CardTitle>

@@ -6,6 +6,8 @@
  */
 
 'use client'
+
+import TimeAgo from 'react-timeago'
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
@@ -71,7 +73,7 @@ export default function Page({params}) {
             </Link>
           </div>
           <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl">Policy #{data?.policyNumber}</h1>
-          <p className="text-sm text-gray-500 dark:text-gray-400">Last updated on {data?.createdAt}</p>
+          <p className="text-sm text-gray-500 dark:text-gray-400">Updated <TimeAgo date={data?.createdAt} /> </p>
         </div>
       </div>
       <div className="bg-gray-100 border-t border-b border-gray-200 dark:bg-gray-800 dark:border-gray-800">

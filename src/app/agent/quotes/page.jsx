@@ -1,4 +1,5 @@
 "use client"
+import TimeAgo from 'react-timeago'
 import React,{useState} from 'react'
 import { TableHead, TableRow, TableHeader, TableCell, TableBody, Table } from "@/components/ui/table"
 import { Button } from "@/components/ui/button"
@@ -20,6 +21,7 @@ import { Label } from '@/components/ui/label'
 import SearchableSelect from '../components/SearchableSelect'
 import Errors from '../components/Errors'
 import Link from 'next/link'
+import { FindLabel } from '../../../../libs/functions/findLabel'
 
 
 export default  function Page() {
@@ -37,7 +39,7 @@ export default  function Page() {
   
     setSelectedOption2(selectedOption2._id)
   };
-  const {qd,qe,ql} = FetchAll("quotes")
+  const {qd,qe,ql} = FetchAll("quotes",limit)
 
 
 
@@ -115,8 +117,9 @@ if(res.message){
         <TableHeader>
           <TableRow>
             <TableHead className="text-sm">Quote Number</TableHead>
-            <TableHead className="text-sm">Client</TableHead>
+          
             <TableHead className="text-sm">Vehicle</TableHead>
+            <TableHead className="text-sm">Policy</TableHead>
             <TableHead className="text-sm">Start Date</TableHead>
             <TableHead className="text-sm">Expiry Date</TableHead>
             <TableHead className="text-sm">Actions</TableHead>
@@ -131,10 +134,10 @@ if(res.message){
       
      <TableRow key={item._id}>
      <TableCell className="font-medium"><Link href={`./quotes/${item._id}`}>{item.qoute_number}</Link></TableCell>
-     <TableCell>{item.client_id}</TableCell>
-     <TableCell>{item.vehicle_id}</TableCell>
-     <TableCell>{item.start_date}</TableCell>
-     <TableCell>{item.end_date}</TableCell>
+     <TableCell><FindLabel tag={"vehicles"} id={item.policy_id} /></TableCell>
+     <TableCell><FindLabel tag={"policies"} id={item.vehicle_id} /></TableCell>
+     <TableCell><TimeAgo date={item.start_date} /></TableCell>
+     <TableCell><TimeAgo date={item.end_date} /></TableCell>
      <TableCell className="space-y-3">
        <Button className="w-6 h-6" size="icon" variant="outline">
          <FileEditIcon className="h-4 w-4" />
@@ -149,7 +152,7 @@ if(res.message){
  ))}
  </TableBody>
       </Table>
-
+      
       <Errors  data={qd} error={qe} loading={ql}/>
 </div>
     </div>

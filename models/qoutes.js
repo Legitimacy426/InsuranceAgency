@@ -48,4 +48,4 @@ const quoteSchema = new mongoose.Schema(
 )
 
 
-export const Quote = mongoose.model("quote",quoteSchema)
+export const Quote =  mongoose.models.quote ||  mongoose.model("quote",quoteSchema)

@@ -47,4 +47,6 @@ const vehicleSchema = new mongoose.Schema({
 })
 
 
-export const Vehicle = mongoose.model('vehicle', vehicleSchema);
+ export const Vehicle =  mongoose.models.vehicle || mongoose.model('vehicle', vehicleSchema);
+
+ 
