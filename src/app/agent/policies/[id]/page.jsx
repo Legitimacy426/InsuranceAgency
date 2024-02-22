@@ -33,9 +33,9 @@ export default function Page({params}) {
 
 
    
-  const {data,pe,pl} = useFetchWithID("policies",params.Id)
+  const {data,error,loading} = useFetchWithID("policies",params.Id)
 
-
+alert(params.Id)
   // updating================
 
   const handleSubmit = async (e) =>{
