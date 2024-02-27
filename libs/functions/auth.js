@@ -8,7 +8,8 @@ import { useRouter } from "next/navigation";
 
 
 export const authenticate = async () =>{
-
+  const domainp = "https://insurance-agency-bice.vercel.app/"
+  const domaind = "http://localhost:3000/"
   const router = useRouter()
    onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -23,7 +24,7 @@ export const authenticate = async () =>{
       } else {
         // User is signed out
         // ...
-  router.push("http://localhost:3000/")
+  router.push(domainp)
         console.log('not logged in')
 
 
@@ -35,7 +36,7 @@ export const authenticate = async () =>{
 export const signout = () =>{
 
   signOut(auth).then(() => {
-    router.push("http://localhost:3000/")
+    router.push(domainp)
   }).catch((error) => {
 return(<h1>loading....</h1>)
   });
