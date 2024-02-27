@@ -9,7 +9,9 @@ function useFetchWithID(tag,id) {
     const [loading,setLoading] = useState(true)
 
     const fetchData = async () =>{
-        const url = `https://insurance-agency-bice.vercel.app/api/${tag}/${id}`
+      const urld = "https://insurance-agency-bice.vercel.app/api"
+      const urlp= "http://localhost:3000/api"
+        const url = `${urld}/${tag}/${id}`
         try {
           const res = await fetch(url,{cache:"no-store"})
           if(!res.ok){

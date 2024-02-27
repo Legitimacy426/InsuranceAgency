@@ -12,7 +12,9 @@ function useFetchWithIDWhere(tag,id,q) {
     const [loading,setLoading] = useState(true)
 
     const fetchData = async () =>{
-        const url = `https://insurance-agency-bice.vercel.app/api/${tag}/${id}`
+      const urlp = "https://insurance-agency-bice.vercel.app/api"
+      const urld= "http://localhost:3000/api"
+        const url = `${urld}/${tag}/${id}`
         try {
          await conn()
          const newData = []

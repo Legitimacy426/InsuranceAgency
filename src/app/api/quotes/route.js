@@ -18,7 +18,7 @@ export async function POST(req){
 
 export async function GET(){
     await conn()
-   const  quotes = await Quote.find()
+   const  quotes = await Quote.find().sort({createdAt:-1 })
    return NextResponse.json(quotes)
 }
 

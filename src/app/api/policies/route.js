@@ -15,7 +15,7 @@ export async function POST(req){
 
 export async function GET(){
     await conn()
-    const policies = await Policy.find()
+    const policies = await Policy.find().sort({createdAt:-1 })
     return NextResponse.json(policies)
 }
 

@@ -16,7 +16,7 @@ return NextResponse.json(vehicle)
 
 export async function GET(){
     await conn()
-    const vehicles = await Vehicle.find()
+    const vehicles = await Vehicle.find().sort({createdAt:-1 })
     return NextResponse.json(vehicles)
 }
 

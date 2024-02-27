@@ -19,7 +19,7 @@ export async function POST(req){
 
 export async function GET(){
     await conn()
-   const  clients = await Client.find()
+   const  clients = await Client.find().sort({createdAt:-1 })
    return NextResponse.json(clients)
 }
 

@@ -5,7 +5,7 @@
  * Documentation: https://v0.dev/docs#integrating-generated-code-into-your-nextjs-app
  */
 
-'use client'
+
 
 import TimeAgo from 'react-timeago'
 import Link from "next/link"
@@ -35,7 +35,7 @@ export default function Page({params}) {
    
   const {data,error,loading} = useFetchWithID("policies",params.Id)
 
-alert(params.Id)
+
   // updating================
 
   const handleSubmit = async (e) =>{

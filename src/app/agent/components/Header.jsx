@@ -7,22 +7,28 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { DropdownMenuTrigger, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuItem, DropdownMenuContent, DropdownMenu } from "@/components/ui/dropdown-menu"
 import Image from 'next/image'
-import { authenticate } from '../../../../libs/functions/auth'
+import { authenticate, signout } from '../../../../libs/functions/auth'
 import useFetchAll from '../../../../hooks/FetchAll'
 import SearchableSelect from './SearchableSelect'
 import { useRouter } from 'next/navigation'
+
+
 function Header({tag}) {
+
+authenticate()
   const [selectedOption, setSelectedOption] = useState(null);
 
 const router = useRouter()
 
-
+ const domainp = "https://insurance-agency-bice.vercel.app/agent"
+    const domaind = "http://localhost:3000/agent"
 
   const handleChange = (selectedOption) => {
     setSelectedOption(selectedOption);
     console.log(selectedOption._id)
+   
     // navigate here
-    router.push(`${tag}/${selectedOption._id}`)
+    router.push(`${domainp}/${tag}/${selectedOption._id}`)
 
   };
   // const userId = authenticate()
@@ -36,10 +42,11 @@ const router = useRouter()
           <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h7" /></svg>
         </div>
         <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
-          <li><Link href={'./clients'} >Clients</Link></li>
-          <li><Link href={'./vehicles'} >Vehicles</Link></li>
-          <li><Link href={'./policies'} >Policies</Link></li>
-          <li><Link href={'./quotes'} >Quotes</Link></li>
+          <li><Link href={`${domainp}/dashboard`} >Dashboard</Link></li>
+          <li><Link href={`${domainp}/clients`} >Clients</Link></li>
+          <li><Link href={`${domainp}/vehicles`} >Vehicles</Link></li>
+          <li><Link href={`${domainp}/policies`} >Policies</Link></li>
+          <li><Link href={`${domainp}/quotes`} >Quotes</Link></li>
          
         
         </ul>
@@ -66,20 +73,20 @@ const router = useRouter()
           <Package2Icon className="w-6 h-6" />
           <span className="sr-only">Insure</span>
         </Link>
-        <Link className="font-bold" href="./dashboard">
+        <Link className="font-bold" href={`${domainp}/dashboard`}>
         Dashboard
         </Link>
-        <Link className="text-gray-500 dark:text-gray-400" href="./clients">
+        <Link className="text-gray-500 dark:text-gray-400" href={`${domainp}/clients`}>
           Clients
         </Link>
         <Link className="text-gray-500 dark:text-gray-400" href="./vehicles">
-      Vehicles
+       Vehicles
         </Link>
         <Link className="text-gray-500 dark:text-gray-400" href="./policies">
           Policies
         </Link>
         <Link className="text-gray-500 dark:text-gray-400" href="./quotes">
-    Quotes
+       Quotes
         </Link>
       
       </nav>
@@ -97,7 +104,7 @@ const router = useRouter()
            value={selectedOption}
            onChange={handleChange}
            placeholder={selectedOption}
-        
+          
       />
 
           </div>
@@ -126,7 +133,7 @@ const router = useRouter()
             <DropdownMenuContent align="end">
           
               <DropdownMenuSeparator />
-              <DropdownMenuItem><Link href={'./'}>Logout</Link></DropdownMenuItem>
+              <DropdownMenuItem  onClick={()=>{signout()}}><Link href={''}>Logout</Link></DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
       </div>

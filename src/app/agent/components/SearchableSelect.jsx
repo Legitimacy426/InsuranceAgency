@@ -29,13 +29,7 @@ const SearchableSelect = ({tag,onChange, value, }) => {
    data = []
   }
 
-  const options = [
-    { name: 'apple', label: 'Apple' },
-    { name: 'banana', label: 'Banana' },
-    { name: 'orange', label: 'Orange' },
-    { name: 'grape', label: 'Grape' },
-    // Add more options as needed
-  ];
+
 
 
   return (

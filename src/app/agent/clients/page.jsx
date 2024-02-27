@@ -18,6 +18,7 @@ import FetchAll from '../../../../hooks/FetchAll'
 import Link from 'next/link'
 import Errors from '../components/Errors'
 import { deleteData } from '../../../../libs/functions/deleteData'
+import { useRouter } from 'next/navigation'
 
 
 
@@ -33,7 +34,7 @@ export default  function Page() {
   const [limit, setlimit] = useState(10);
   const [label, setLabel] = useState(fullName);
 
-
+const router = useRouter()
 const {cd,ce,cl} = FetchAll("clients",limit)
 
 
@@ -141,7 +142,7 @@ console.log(cd)
                
              <TableRow key={item.id}>
               
-              <TableCell className="font-medium"><Link href={`./clients/${item._id}`} >{item.fullName}</Link></TableCell>
+              <TableCell className="font-medium"><Link href={`./clients/${item._id}`} >{item.fullName}</Link><button onClick={()=>{router.push(`http://localhost:3000/agent/clients/${item._id}`)}}>dfvccvvcvd</button>  </TableCell>
               <TableCell>{item.email}</TableCell>
               <TableCell>{item.phone}</TableCell>
               <TableCell>{item.IDNumber}</TableCell>

@@ -122,39 +122,39 @@ export default function Page({params}) {
          <label className="font-medium" htmlFor="name">
            Full name
          </label>
-         <Input id="name" name="fullName" value={fullName} onChange={(e)=>{setFullName(e.target.value)}}  />
+         <Input id="name" name="fullName" value={fullName} onChange={(e)=>{setFullName(e.target.value)}}  placeholder={data?.fullName}  />
        </div>
        {/* <input type="text" value={fullName} /> */}
        <div className="flex flex-col">
          <label className="font-medium" htmlFor="idnumber">
          ID Number
          </label>
-         <Input id="idnumber" name="IDNumber" value={IDNumber}  onChange={(e)=>{setIDNumber(e.target.value)}}  type="number" />
+         <Input id="idnumber" name="IDNumber" value={IDNumber}  onChange={(e)=>{setIDNumber(e.target.value)}}  type="number"  placeholder={data?.IDNumber}/>
        </div>
        <div className="flex flex-col">  
          <label className="font-medium" htmlFor="email">
         Email Address
          </label>
-         <Input id="email" name="email"   value={email} onChange={(e)=>{setEmail(e.target.value)}} type="email" />
+         <Input id="email" name="email"   value={email} onChange={(e)=>{setEmail(e.target.value)}} type="email" placeholder={data?.email} />
        </div>
        <div className="flex flex-col">
          <label className="font-medium" htmlFor="phone">
           Phone Number
          </label>
-         <Input id="phone" name="phone"  value={phone} onChange={(e)=>{setPhone(e.target.value)}} type="text" />
+         <Input id="phone" name="phone"  value={phone} onChange={(e)=>{setPhone(e.target.value)}} placeholder={data?.phone} type="text" />
        </div>
        
        <div className="flex flex-col col-span-2">
          <label className="font-medium" htmlFor="city">
            City
          </label>
-         <Input id="city" name="city"  value={city} onChange={(e)=>{setCity(e.target.value)}}  />
+         <Input id="city" name="city"  value={city} onChange={(e)=>{setCity(e.target.value)}}  placeholder={data?.city} />
        </div>
        <div className="flex flex-col col-span-2">
          <label className="font-medium" htmlFor="address">
            Street Address
          </label>
-         <Input id="address" name="address" value={address} onChange={(e)=>{setAddress(e.target.value)}}  />
+         <Input id="address" name="address" value={address} onChange={(e)=>{setAddress(e.target.value)}} placeholder={data?.address}  />
        </div>
        
        {/* <div className="flex items-center col-span-2">

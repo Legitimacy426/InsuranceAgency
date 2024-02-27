@@ -7,10 +7,10 @@ function FetchAll(tag,limit) {
     const [error,setError] = useState('')
     const [data,setData] = useState([])
     const [loading,setLoading] = useState(true)
-// https://insurance-agency-bice.vercel.app/api/
-//http://localhost:3000/api/
+    const urld = "https://insurance-agency-bice.vercel.app/api"
+    const urlp= "http://localhost:3000/api"
     const fetchData = async () =>{
-        const url = `https://insurance-agency-bice.vercel.app/api/${tag}`
+        const url = `${urld}/${tag}`
         const q = ""
         try {
           const res = await fetch(url,{cache:"no-store"})

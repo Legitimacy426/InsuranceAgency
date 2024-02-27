@@ -22,8 +22,9 @@ import { deleteData } from '../../../../libs/functions/deleteData'
 
 
 
-export default  function Page() {
-  const {pd,pe,pl} = FetchAll("policies")
+export default  function Page() { 
+   const [limit, setlimit] = useState(10);
+  const {pd,pe,pl} = FetchAll("policies",limit)
   const term = "By accepting this policy, you agree to the following terms and conditions:Policy is valid for one year from the start date Claims must be filed within 30 days of the incident Additional coverage options are available for an extra fee"
 
   // const data = await fetchAll('policies')
@@ -36,7 +37,7 @@ export default  function Page() {
   const [exclusions, setExclusions] = useState("");
   const [description, setDescription] = useState("");
   const [label, setLabel] = useState(policyNumber);
-  const [limit, setlimit] = useState(10);
+
 
 
   const handleDelete = (id,name) =>{

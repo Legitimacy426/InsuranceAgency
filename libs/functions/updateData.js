@@ -1,7 +1,7 @@
 export const updateData = async (tag,data,id) =>{
-    // https://insurance-agency-bice.vercel.app/api/
-    // http://localhost:3000/api/
-      const url = `https://insurance-agency-bice.vercel.app/api/${tag}/${id}`
+  const urld = "https://insurance-agency-bice.vercel.app/api"
+  const urlp= "http://localhost:3000/api"
+      const url = `${urld}/${tag}/${id}`
       try {
         const res = await fetch(url,{
         method:"PUT",
