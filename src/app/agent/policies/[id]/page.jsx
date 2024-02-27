@@ -72,8 +72,8 @@ export default function Page({params}) {
               <span>Back to Policies</span> */}
             </Link>
           </div>
-          <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl">Policy #{data?.policyNumber}</h1>
-          <p className="text-sm text-gray-500 dark:text-gray-400">Updated <TimeAgo date={data?.createdAt} /> </p>
+          <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl">Policy #{data.policyNumber}</h1>
+          <p className="text-sm text-gray-500 dark:text-gray-400">Updated <TimeAgo date={data.createdAt} /> </p>
         </div>
       </div>
       <div className="bg-gray-100 border-t border-b border-gray-200 dark:bg-gray-800 dark:border-gray-800">
@@ -90,7 +90,7 @@ export default function Page({params}) {
             </div>
             <div className="flex items-center justify-end space-x-4">
               <Button size="sm" variant="outline">
-              KES    {data?.premium}
+              KES    {data.premium}
               </Button>
               <Button size="sm" variant="outline">
                 Download PDF
@@ -113,7 +113,7 @@ export default function Page({params}) {
                 {/* <li>Accidental damage</li>
                 <li>Theft</li>
                 <li>Natural disasters</li> */}
-                 {data?.description}
+                 {data.description}
               </ul>
             </div>
           </div>
@@ -129,7 +129,7 @@ export default function Page({params}) {
                 {/* <li>Policy is valid for one year from the start date</li>
                 <li>Claims must be filed within 30 days of the incident</li>
                 <li>Additional coverage options are available for an extra fee{"\n                              "}</li> */}
-                <li>{data?.coverageLimit}</li>
+                <li>{data.coverageLimit}</li>
               </ul>
             </div>
           </div>
