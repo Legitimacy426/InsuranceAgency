@@ -3,7 +3,7 @@ export const deleteData = async (tag,id) =>{
     const urlp= "http://localhost:3000/api"
 
     
-      const url = `${urld}/${tag}/${id}`
+      const url = `${urlp}/${tag}/${id}`
       try {
         const res = await fetch(url,{
         method:"DELETE",

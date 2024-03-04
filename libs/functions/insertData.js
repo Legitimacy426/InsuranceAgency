@@ -1,7 +1,7 @@
 export const insertData = async (tag,data) =>{
   const urld = "https://insurance-agency-bice.vercel.app/api"
   const urlp= "http://localhost:3000/api"
-    const url = `${urld}/${tag}`
+    const url = `${urlp}/${tag}`
     try {
       const res = await fetch(url,{
       method:"POST",

@@ -20,8 +20,8 @@ authenticate()
 
 const router = useRouter()
 
- const domainp = "https://insurance-agency-bice.vercel.app/agent"
-    const domaind = "http://localhost:3000/agent"
+ const domaind = "https://insurance-agency-bice.vercel.app/agent"
+    const domainp = "http://localhost:3000/agent"
 
   const handleChange = (selectedOption) => {
     setSelectedOption(selectedOption);
