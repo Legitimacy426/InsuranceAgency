@@ -12,7 +12,7 @@ import { Checkbox } from "@/components/ui/checkbox"
 
 
 import Header from '../components/Header'
-import { fetchAll } from '../../../../libs/functions/fetchAll'
+
 import Search from '@/app/components/Search'
 import { insertData } from '../../../../libs/functions/insertData'
 import FetchAll from '../../../../hooks/FetchAll'
