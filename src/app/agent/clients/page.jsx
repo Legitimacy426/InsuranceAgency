@@ -142,7 +142,7 @@ console.log(cd)
                
              <TableRow key={item.id}>
               
-              <TableCell className="font-medium"><button onClick={()=>{router.push(`http://localhost:3000/agent/clients/${item._id}`)}}>{item.fullName}</button>  </TableCell>
+              <TableCell className="font-medium"><button onClick={()=>{router.push(`./clients/${item._id}`)}}>{item.fullName}</button>  </TableCell>
               <TableCell>{item.email}</TableCell>
               <TableCell>{item.phone}</TableCell>
               <TableCell>{item.IDNumber}</TableCell>
