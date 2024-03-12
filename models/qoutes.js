@@ -43,7 +43,7 @@ const quoteSchema = new mongoose.Schema(
         createdAt: {
           type: Date,
           default: Date.now
-        }
+        } 
       }
 )
 

@@ -14,7 +14,7 @@ function useFetchWithIDWhere(tag,id,q) {
     const fetchData = async () =>{
       const urlp = "https://insurance-agency-bice.vercel.app/api"
       const urld= "http://localhost:3000/api"
-        const url = `${urld}/${tag}/${id}`
+        const url = `${urlp}/${tag}/${id}`
         try {
          await conn()
          const newData = []

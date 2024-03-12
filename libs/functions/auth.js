@@ -36,7 +36,7 @@ export const authenticate = async () =>{
 export const signout = () =>{
 
   signOut(auth).then(() => {
-    router.push(domainp)
+    router.push(domaind)
   }).catch((error) => {
 return(<h1>loading....</h1>)
   });

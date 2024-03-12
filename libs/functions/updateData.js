@@ -1,7 +1,7 @@
 export const updateData = async (tag,data,id) =>{
   const urld = "https://insurance-agency-bice.vercel.app/api"
   const urlp= "http://localhost:3000/api"
-      const url = `${urlp}/${tag}/${id}`
+      const url = `${urld}/${tag}/${id}`
       try {
         const res = await fetch(url,{
         method:"PUT",
@@ -16,7 +16,7 @@ export const updateData = async (tag,data,id) =>{
        console.log(res)
       
        if(!res.ok){
-        throw new Error("Failed to insert")
+        throw new Error("Failed to Update")
       }
       
       return await res.json({message:"success"})
