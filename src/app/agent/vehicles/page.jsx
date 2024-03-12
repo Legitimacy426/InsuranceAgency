@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input"
 import { DropdownMenuTrigger, DropdownMenuRadioItem, DropdownMenuRadioGroup, DropdownMenuContent, DropdownMenu } from "@/components/ui/dropdown-menu"
 
 import Header from '../components/Header'
-import { fetchAll } from '../../../../libs/functions/fetchAll'
+
 import { insertData } from '../../../../libs/functions/insertData'
 import FetchAll from '../../../../hooks/FetchAll'
 import SearchableSelect from '../components/SearchableSelect'

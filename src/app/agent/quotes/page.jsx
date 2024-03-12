@@ -13,7 +13,7 @@ import { CardTitle, CardContent, CardHeader, Card } from "@/components/ui/card"
 
 
 import Header from '../components/Header'
-import { fetchAll } from '../../../../libs/functions/fetchAll'
+
 import Search from '@/app/components/Search'
 import { insertData } from '../../../../libs/functions/insertData'
 import FetchAll from '../../../../hooks/FetchAll'
