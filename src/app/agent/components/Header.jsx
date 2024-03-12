@@ -20,8 +20,8 @@ authenticate()
 
 const router = useRouter()
 
- const domaind = "https://insurance-agency-bice.vercel.app/agent"
-    const domainp = "http://localhost:3000/agent"
+ const domainp = "https://insurance-agency-bice.vercel.app/agent"
+    const domaind = "http://localhost:3000/agent"
 
   const handleChange = (selectedOption) => {
     setSelectedOption(selectedOption);
@@ -79,13 +79,13 @@ const router = useRouter()
         <Link className="text-gray-500 dark:text-gray-400" href={`${domainp}/clients`}>
           Clients
         </Link>
-        <Link className="text-gray-500 dark:text-gray-400" href="./vehicles">
+        <Link className="text-gray-500 dark:text-gray-400" href={`${domainp}/vehicles`}>
        Vehicles
         </Link>
-        <Link className="text-gray-500 dark:text-gray-400" href="./policies">
+        <Link className="text-gray-500 dark:text-gray-400" href={`${domainp}/policies`}>
           Policies
         </Link>
-        <Link className="text-gray-500 dark:text-gray-400" href="./quotes">
+        <Link className="text-gray-500 dark:text-gray-400" href={`${domainp}/quotes`}>
        Quotes
         </Link>
       
